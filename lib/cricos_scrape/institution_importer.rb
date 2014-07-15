@@ -1,12 +1,3 @@
-require 'rubygems'
-require 'mechanize'
-
-class Institution < Struct.new(:provider_code, :trading_name, :name, :type, :total_capacity, :postal_address, :website)
-end
-
-class Address < Struct.new(:address_line_1, :address_line_2, :suburb, :state, :postcode)
-end
-
 module CricosScrape
   class InstitutionImporter
 
