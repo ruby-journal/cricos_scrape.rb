@@ -124,7 +124,7 @@ module CricosScrape
     # there is no record not found page
     # instead a search page is returned
     def institution_not_found?
-      @page.at('#pnlInstitutionDetails').nil?
+      find_value_of_field(@page.at('#pnlErrorMessage td:last')) == "The Provider ID entered is invalid - please try another."
     end
 
     def find_location
