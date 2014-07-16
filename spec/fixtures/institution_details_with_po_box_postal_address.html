@@ -4,7 +4,7 @@
   Institution Details - ACT Education and Training Directorate
 </title><meta name="robots" content="noindex" /><link href="../Common/Styles/Styles.css" rel="stylesheet" type="text/css" /><link href="../App_Themes/Theme1/Theme1.css" type="text/css" rel="stylesheet" /></head>
     <body>
-        <form method="post" action="InstitutionDetailsOnePage.aspx?ProviderId=643" id="Form1">
+        <form method="post" action="institution_details_with_po_box_postal_address.html?ProviderID=643&LocationID=456" id="Form1">
 <div class="aspNetHidden">
 <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
 <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
@@ -32,21 +32,21 @@ function __doPostBack(eventTarget, eventArgument) {
         <script type='text/javascript' language='javascript'>
                 // <![CDATA[
         var gridsActive=true;
-        function HandleGridMouseOver(source)
+        function HandleGridMouseOver(source) 
         {
-          if (gridsActive)
+          if (gridsActive) 
           {
             if (typeof gridFromCRICOSSite != 'undefined')
             {
-                            source.style.backgroundColor='#F1E6E7';
+                            source.style.backgroundColor='#F1E6E7'; 
               source.style.cursor='pointer';
-
+                            
             }
             else
             {
-                            source.style.backgroundColor='#d9e6ed';
-              source.style.cursor='pointer';
-            }
+                            source.style.backgroundColor='#d9e6ed'; 
+              source.style.cursor='pointer';              
+            }           
           }
         }
         function HandleGridMouseOut(source)
@@ -59,7 +59,7 @@ function __doPostBack(eventTarget, eventArgument) {
         }
                 // ]] >
         </script>
-
+      
             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="tblHeader" id="AutoNumber1">
                 <tr>
                     <td>
@@ -70,37 +70,37 @@ function __doPostBack(eventTarget, eventArgument) {
             </table>
             <br />
             <div id="pnlInstitutionDetails">
-
-
+  
+                
 <br />
 <table role="presentation" cellspacing="0" width="100%"  border="0" style="vertical-align: top;">
     <tr>
         <td style="width: 30%" class="clsFormLabelLeft">CRICOS Provider Code:</td>
         <td style="width: 70%">
             <span id="institutionDetails_lblProviderCode">00643J</span>
-
+            
         </td>
     </tr>
-
+    
     <tr id="institutionDetails_pnlInstitutioName">
     <td class="clsFormLabelLeft">Institution Name:</td>
     <td>
             <span id="institutionDetails_lblInstitutionName">ACT Education and Training Directorate</span></td>
   </tr>
-
+  
     <tr>
         <td class="clsFormLabelLeft">Institution Type:</td>
         <td>
             <span id="institutionDetails_lblInstitutionType">Government</span></td>
     </tr>
-
+    
     <tr id="institutionDetails_trLocationCapacity">
     <td class="clsFormLabelLeft">Total capacity across all provider's locations:</td>
     <td>
             <span id="institutionDetails_lblLocationCapacity">940</span></td>
   </tr>
-
-
+  
+    
     <tr>
         <td colspan="2">&nbsp;</td>
     </tr>
@@ -111,14 +111,14 @@ function __doPostBack(eventTarget, eventArgument) {
         <td>
             <span id="institutionDetails_lblInstitutionPostalAddress">GPO Box 158 <br/>CANBERRA ACT <br/>Australian Capital Territory &nbsp;2601 <br/></span></td>
     </tr>
-
+  
 </table>
-
+                
 <table cellspacing="0" width="100%" border="0" cellpadding="1">
     <tr>
     <td colspan="2">
       <div id="contactDetails_pnlPrincipalExecutiveOfficerDetails">
-
+    
         <h2>Principal Executive Officer:</h2>
         <table role="presentation" cellspacing="0" cellpadding="0" width="100%" border="0">
           <tr>
@@ -145,18 +145,18 @@ function __doPostBack(eventTarget, eventArgument) {
             <td colspan="2" height="30">&nbsp;</td>
           </tr>
         </table>
-
+      
   </div>
     </td>
   </tr>
     <tr id="contactDetails_tr1">
     <td colspan="2">&nbsp;</td>
   </tr>
-
+  
   <tr id="contactDetails_trISCOne">
     <td colspan="2">
       <div id="contactDetails_pnlInternationalStudentContactDetails">
-
+      
         <h2>International Student Contact:</h2>
         <table role="presentation" cellspacing="0" cellpadding="0" width="100%" border="0">
           <tr>
@@ -185,18 +185,18 @@ function __doPostBack(eventTarget, eventArgument) {
               <a id="contactDetails_lnkEmailAddress" href="mailto:paul.wang@act.gov.au">paul.wang@act.gov.au</a></td>
           </tr>
         </table>
-
+      
     </div>
 
-
+            
         </td>
   </tr>
-
+  
   <tr id="contactDetails_trSpace">
     <td colspan="2">&nbsp;</td>
   </tr>
-
-
+  
+  
 </table>
 
                 <span id="locationList_lblResultsSummary" class="clsSmallText"> To display all courses at a particular location, please click on the location in the list below.</span>
@@ -209,62 +209,62 @@ function __doPostBack(eventTarget, eventArgument) {
         <th scope="col">Location Name</th><th scope="col">State</th><th align="right" scope="col">Number of Courses</th><th scope="col">&nbsp;</th>
       </tr><tr class="gridRow" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-0&#39;); gridsActive=true; }">
         <td valign="top">ACT Education and Training Directorate</td><td valign="top">ACT</td><td align="right" valign="top">2</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">ACT Education and Training Directorate - ACT - 2</a>
             </td>
       </tr><tr class="gridAltItem" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-1&#39;); gridsActive=true; }">
         <td valign="top">Alfred Deakin High School</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Alfred Deakin High School - ACT - 1</a>
             </td>
       </tr><tr class="gridRow" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-2&#39;); gridsActive=true; }">
         <td valign="top">Amaroo School</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Amaroo School - ACT - 1</a>
             </td>
       </tr><tr class="gridAltItem" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-3&#39;); gridsActive=true; }">
         <td valign="top">Belconnen High</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Belconnen High - ACT - 1</a>
             </td>
       </tr><tr class="gridRow" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-4&#39;); gridsActive=true; }">
         <td valign="top">Campbell High School</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Campbell High School - ACT - 1</a>
             </td>
       </tr><tr class="gridAltItem" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-5&#39;); gridsActive=true; }">
         <td valign="top">Canberra College</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Canberra College - ACT - 1</a>
             </td>
       </tr><tr class="gridRow" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-6&#39;); gridsActive=true; }">
         <td valign="top">Canberra High School</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Canberra High School - ACT - 1</a>
             </td>
       </tr><tr class="gridAltItem" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-7&#39;); gridsActive=true; }">
         <td valign="top">Caroline Chisholm School</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Caroline Chisholm School - ACT - 1</a>
             </td>
       </tr><tr class="gridRow" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-8&#39;); gridsActive=true; }">
         <td valign="top">Dickson College</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Dickson College - ACT - 1</a>
             </td>
       </tr><tr class="gridAltItem" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-9&#39;); gridsActive=true; }">
         <td valign="top">Erindale College</td><td valign="top">ACT</td><td align="right" valign="top">1</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Erindale College - ACT - 1</a>
             </td>
       </tr><tr class="gridPager">
@@ -276,7 +276,7 @@ function __doPostBack(eventTarget, eventArgument) {
       </tr>
     </table>
   </div>
-
+                
 <script type="text/javascript" language="javascript">
     // <![CDATA[
     var gridFromCRICOSSite = true;
@@ -287,7 +287,7 @@ function __doPostBack(eventTarget, eventArgument) {
     <tr>
         <td valign="top">
             <div id="courseList_pnlSearchResultsWithoutCourseCount">
-
+    
                 <div>
       <table class="grid" cellspacing="0" rules="rows" summary="This table shows the results of course search." border="1" id="courseList_gridSearchResults" style="width:100%;border-collapse:collapse;">
         <caption>
@@ -305,8 +305,8 @@ function __doPostBack(eventTarget, eventArgument) {
         </tr>
       </table>
     </div>
-
-
+              
+            
   </div>
         </td>
     </tr>
@@ -314,10 +314,10 @@ function __doPostBack(eventTarget, eventArgument) {
 <br />
 <span id="courseList_lblSearchDescription" class="clsSmallText">Showing all active courses</span>
                 <br />
-                <span id="lblCRICOSContacts">If any of the Information displayed above is incorrect please notify the ACT CRICOS Administrator</span>
-
+                <span id="lblCRICOSContacts">If any of the Information displayed above is incorrect please notify the ACT CRICOS Administrator</span>             
+            
 </div>
-
+            
         </form>
     </body>
 </html>

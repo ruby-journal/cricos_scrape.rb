@@ -29,6 +29,12 @@ describe CricosScrape::InstitutionImporter do
       its(:postal_address) do
         is_expected.to eq Address.new('International Education Office', 'PO Box 968', 'NORTH SYDNEY', 'New South Wales', '2059')
       end
+
+      context 'when the response body not contains pagination location' do
+        its(:locations) do
+          is_expected.to eq [Location.new('123', 'Australian Catholic University', 'ACT', '42')]
+        end
+      end
     end
 
     context 'when the response body does not contains Address Line 2' do
@@ -42,6 +48,46 @@ describe CricosScrape::InstitutionImporter do
       its(:website) { is_expected.to be_nil }
       its(:postal_address) do
         is_expected.to eq Address.new('GPO Box 158', nil, 'CANBERRA ACT', 'Australian Capital Territory', '2601')
+      end
+      
+      context 'when the response body contains pagination location' do
+        its(:locations) do
+          data = [
+            Location.new("456", "ACT Education and Training Directorate", "ACT", "2"),
+            Location.new("456", "Alfred Deakin High School", "ACT", "1"),
+            Location.new("456", "Amaroo School", "ACT", "1"),
+            Location.new("456", "Belconnen High", "ACT", "1"),
+            Location.new("456", "Campbell High School", "ACT", "1"),
+            Location.new("456", "Canberra College", "ACT", "1"),
+            Location.new("456", "Canberra High School", "ACT", "1"),
+            Location.new("456", "Caroline Chisholm School", "ACT", "1"),
+            Location.new("456", "Dickson College", "ACT", "1"),
+            Location.new("456", "Erindale College", "ACT", "1"),
+
+            Location.new("456", "ACT Education and Training Directorate", "ACT", "2"),
+            Location.new("456", "Alfred Deakin High School", "ACT", "1"),
+            Location.new("456", "Amaroo School", "ACT", "1"),
+            Location.new("456", "Belconnen High", "ACT", "1"),
+            Location.new("456", "Campbell High School", "ACT", "1"),
+            Location.new("456", "Canberra College", "ACT", "1"),
+            Location.new("456", "Canberra High School", "ACT", "1"),
+            Location.new("456", "Caroline Chisholm School", "ACT", "1"),
+            Location.new("456", "Dickson College", "ACT", "1"),
+            Location.new("456", "Erindale College", "ACT", "1"),
+
+            Location.new("456", "ACT Education and Training Directorate", "ACT", "2"),
+            Location.new("456", "Alfred Deakin High School", "ACT", "1"),
+            Location.new("456", "Amaroo School", "ACT", "1"),
+            Location.new("456", "Belconnen High", "ACT", "1"),
+            Location.new("456", "Campbell High School", "ACT", "1"),
+            Location.new("456", "Canberra College", "ACT", "1"),
+            Location.new("456", "Canberra High School", "ACT", "1"),
+            Location.new("456", "Caroline Chisholm School", "ACT", "1"),
+            Location.new("456", "Dickson College", "ACT", "1"),
+            Location.new("456", "Erindale College", "ACT", "1"),
+          ]
+          is_expected.to eq data
+        end
       end
     end
   end

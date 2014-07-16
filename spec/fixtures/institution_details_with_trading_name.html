@@ -4,7 +4,7 @@
     Institution Details - Australian Catholic University Limited
 </title><meta name="robots" content="noindex" /><link href="../Common/Styles/Styles.css" rel="stylesheet" type="text/css" /><link href="../App_Themes/Theme1/Theme1.css" type="text/css" rel="stylesheet" /></head>
     <body>
-        <form method="post" action="InstitutionDetailsOnePage.aspx?ProviderId=873" id="Form1">
+        <form method="post" action="institution_details_with_trading_name.html?ProviderID=873&LocationID=123" id="Form1">
 <div class="aspNetHidden">
 <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
 <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
@@ -32,21 +32,21 @@ function __doPostBack(eventTarget, eventArgument) {
                 <script type='text/javascript' language='javascript'>
                 // <![CDATA[
                 var gridsActive=true;
-                function HandleGridMouseOver(source)
+                function HandleGridMouseOver(source) 
                 {
-                    if (gridsActive)
+                    if (gridsActive) 
                     {
                         if (typeof gridFromCRICOSSite != 'undefined')
                         {
-                            source.style.backgroundColor='#F1E6E7';
+                            source.style.backgroundColor='#F1E6E7'; 
                             source.style.cursor='pointer';
-
+                                                        
                         }
                         else
                         {
-                            source.style.backgroundColor='#d9e6ed';
-                            source.style.cursor='pointer';
-                        }
+                            source.style.backgroundColor='#d9e6ed'; 
+                            source.style.cursor='pointer';                          
+                        }                       
                     }
                 }
                 function HandleGridMouseOut(source)
@@ -59,7 +59,7 @@ function __doPostBack(eventTarget, eventArgument) {
                 }
                 // ]] >
                 </script>
-
+            
             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="tblHeader" id="AutoNumber1">
                 <tr>
                     <td>
@@ -70,15 +70,15 @@ function __doPostBack(eventTarget, eventArgument) {
             </table>
             <br />
             <div id="pnlInstitutionDetails">
-
-
+    
+                
 <br />
 <table role="presentation" cellspacing="0" width="100%"  border="0" style="vertical-align: top;">
     <tr>
         <td style="width: 30%" class="clsFormLabelLeft">CRICOS Provider Code:</td>
         <td style="width: 70%">
             <span id="institutionDetails_lblProviderCode">00873F</span>
-
+            
         </td>
     </tr>
     <tr id="institutionDetails_pnlInstitutionTradingName">
@@ -86,25 +86,25 @@ function __doPostBack(eventTarget, eventArgument) {
         <td>
             <span id="institutionDetails_lblInstitutionTradingName">Australian Catholic University Limited</span></td>
     </tr>
-
+    
     <tr id="institutionDetails_pnlInstitutioName">
         <td class="clsFormLabelLeft">Institution Name:</td>
         <td>
             <span id="institutionDetails_lblInstitutionName">Australian Catholic University Limited</span></td>
     </tr>
-
+    
     <tr>
         <td class="clsFormLabelLeft">Institution Type:</td>
         <td>
             <span id="institutionDetails_lblInstitutionType">Government</span></td>
     </tr>
-
+    
     <tr id="institutionDetails_trLocationCapacity">
         <td class="clsFormLabelLeft">Total capacity across all provider's locations:</td>
         <td>
             <span id="institutionDetails_lblLocationCapacity">50</span></td>
     </tr>
-
+    
     <tr id="institutionDetails_trWebsite">
         <td class="clsFormLabelLeft">Website:</td>
         <td>
@@ -112,7 +112,7 @@ function __doPostBack(eventTarget, eventArgument) {
             <img height="10" alt="External link" src="../../Images/External.gif" width="19" border="0" />
         </td>
     </tr>
-
+    
     <tr>
         <td colspan="2">&nbsp;</td>
     </tr>
@@ -123,14 +123,14 @@ function __doPostBack(eventTarget, eventArgument) {
         <td>
             <span id="institutionDetails_lblInstitutionPostalAddress">International Education Office <br/>PO Box 968 <br/>NORTH SYDNEY <br/>New South Wales &nbsp;2059 <br/></span></td>
     </tr>
-
+    
 </table>
-
+                
 <table cellspacing="0" width="100%" border="0" cellpadding="1">
     <tr>
         <td colspan="2">
             <div id="contactDetails_pnlPrincipalExecutiveOfficerDetails">
-
+        
                 <h2>Principal Executive Officer:</h2>
                 <table role="presentation" cellspacing="0" cellpadding="0" width="100%" border="0">
                     <tr>
@@ -157,27 +157,27 @@ function __doPostBack(eventTarget, eventArgument) {
                         <td colspan="2" height="30">&nbsp;</td>
                     </tr>
                 </table>
-
+            
     </div>
         </td>
     </tr>
     <tr id="contactDetails_tr1">
         <td colspan="2">&nbsp;</td>
     </tr>
-
+    
     <tr id="contactDetails_trISCOne">
         <td colspan="2">
+            
 
-
-
+            
         </td>
     </tr>
-
+    
     <tr id="contactDetails_trSpace">
         <td colspan="2">&nbsp;</td>
     </tr>
-
-
+    
+    
 </table>
 
                 <span id="locationList_lblResultsSummary" class="clsSmallText"> To display all courses at a particular location, please click on the location in the list below.</span>
@@ -190,14 +190,14 @@ function __doPostBack(eventTarget, eventArgument) {
                 <th scope="col">Location Name</th><th scope="col">State</th><th align="right" scope="col">Number of Courses</th><th scope="col">&nbsp;</th>
             </tr><tr class="gridRow" onclick="javascript:if (gridsActive) { gridsActive=false; __doPostBack(&#39;locationList$gridSearchResults&#39;,&#39;click-0&#39;); gridsActive=true; }">
                 <td valign="top">Australian Catholic University</td><td valign="top">ACT</td><td align="right" valign="top">42</td><td class="navCol">
-                <a class="readers" href="#" onclick=" return false; "
-                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); "
+                <a class="readers" href="#" onclick=" return false; " 
+                   onfocus=" javascript:HandleGridMouseOver(this.parentElement.parentElement); " 
                    onblur=" javascript:HandleGridMouseOut(this.parentElement.parentElement); ">Australian Catholic University - ACT - 42</a>
             </td>
             </tr>
         </table>
     </div>
-
+                
 <script type="text/javascript" language="javascript">
     // <![CDATA[
     var gridFromCRICOSSite = true;
@@ -208,7 +208,7 @@ function __doPostBack(eventTarget, eventArgument) {
     <tr>
         <td valign="top">
             <div id="courseList_pnlSearchResultsWithoutCourseCount">
-
+        
                 <div>
             <table class="grid" cellspacing="0" rules="rows" summary="This table shows the results of course search." border="1" id="courseList_gridSearchResults" style="width:100%;border-collapse:collapse;">
                 <caption>
@@ -304,8 +304,8 @@ function __doPostBack(eventTarget, eventArgument) {
                 </tr>
             </table>
         </div>
-
-
+              
+            
     </div>
         </td>
     </tr>
@@ -313,10 +313,10 @@ function __doPostBack(eventTarget, eventArgument) {
 <br />
 <span id="courseList_lblSearchDescription" class="clsSmallText">Showing all active courses</span>
                 <br />
-                <span id="lblCRICOSContacts">If any of the Information displayed above is incorrect please notify the ACT CRICOS Administrator</span>
-
+                <span id="lblCRICOSContacts">If any of the Information displayed above is incorrect please notify the ACT CRICOS Administrator</span>                           
+            
 </div>
-
+            
         </form>
     </body>
 </html>
