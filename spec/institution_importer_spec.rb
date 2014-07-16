@@ -9,13 +9,13 @@ describe CricosScrape::InstitutionImporter do
       allow(agent).to receive(:url_for).with(1).and_return(uri)
     end
 
-    # context 'when there is no institution found' do
-    #   let(:uri) { not_found_institution_details_uri }
+    context 'when there is no institution found' do
+      let(:uri) { not_found_institution_details_uri }
 
-    #   it 'does not import' do
-    #     expect(institution).to be_nil
-    #   end
-    # end
+      it 'does not import' do
+        expect(institution).to be_nil
+      end
+    end
 
     context 'when the response body contains Institution Trading Name' do
       let(:uri) { institution_details_with_trading_name_uri }
@@ -49,7 +49,7 @@ describe CricosScrape::InstitutionImporter do
       its(:postal_address) do
         is_expected.to eq Address.new('GPO Box 158', nil, 'CANBERRA ACT', 'Australian Capital Territory', '2601')
       end
-      
+
       context 'when the response body contains pagination location' do
         its(:locations) do
           data = [
