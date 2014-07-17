@@ -151,11 +151,11 @@ module CricosScrape
     end
 
     def total_pages
-      pagination.children[1].text.strip.scan(/^Page [0-9]+ of ([0-9]+).*/).first.first.to_i
+      pagination.children[1].text.strip[/^Page [0-9]+ of ([0-9]+).*/, 1].to_i
     end
 
     def current_pagination_page
-      pagination.children[1].text.strip.scan(/^Page ([0-9]+) of [0-9]+.*/).first.first.to_i
+      pagination.children[1].text.strip[/^Page ([0-9]+) of [0-9]+.*/, 1].to_i
     end
 
     def jump_to_page(page_number)
