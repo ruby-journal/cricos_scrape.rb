@@ -131,7 +131,7 @@ module CricosScrape
       locations = []
 
       if location_results_paginated?
-        for page_number in 1..total_pages
+        for page_number in 1..total_pages.last.to_i
           jump_to_page(page_number)
           locations += fetch_locations_from_current_page
         end
@@ -151,11 +151,11 @@ module CricosScrape
     end
 
     def total_pages
-      pagination.children[1].text.strip.scan(/^Page [0-9]+ of ([0-9]+).*/).first.first.to_i
+      pagination.children[1].text.strip.scan(/^Page ([0-9]+) of ([0-9]+).*/).first
     end
 
     def jump_to_page(page_number)
-      return @page if page_number == 1
+      return @page if page_number == total_pages.first.to_i
 
       hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
