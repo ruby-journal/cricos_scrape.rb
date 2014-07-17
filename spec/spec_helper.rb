@@ -31,4 +31,12 @@ def institution_details_with_pagination_location_page_2_uri
   "file://#{file}"
 end
 
+def contact_details_of_state_act_uri
+  file = File.expand_path("../fixtures/contact_details_of_state_act_uri.html", __FILE__)
+  "file://#{file}"
+end
 
+def contact_details_of_state_wa_uri
+  file = File.expand_path("../fixtures/contact_details_of_state_wa_uri.html", __FILE__)
+  "file://#{file}"
+end
