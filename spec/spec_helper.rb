@@ -21,8 +21,13 @@ def institution_details_without_pagination_location_uri
   "file://#{file}"
 end
 
-def institution_details_with_pagination_location_uri
-  file = File.expand_path("../fixtures/institution_details_with_pagination_location_uri.html", __FILE__)
+def institution_details_with_pagination_location_page_1_uri
+  file = File.expand_path("../fixtures/institution_details_with_pagination_location_page_1_uri.html", __FILE__)
+  "file://#{file}"
+end
+
+def institution_details_with_pagination_location_page_2_uri
+  file = File.expand_path("../fixtures/institution_details_with_pagination_location_page_2_uri.html", __FILE__)
   "file://#{file}"
 end
 

@@ -130,59 +130,55 @@ module CricosScrape
     def find_location
       locations = []
 
-      # always get locations from first page loaded
-      locations.concat(fetch_locations_from_current_page(@page))
-
-      if !pagination.nil?
-        # start get location from page 2. Because we have taken the first page at the top
-        pages = 2..total_pages
-        
-        for page_number in pages
-          current_page = jump_to_page(page_number)
-          locations.concat(fetch_locations_from_current_page(current_page))
+      if location_results_paginated?
+        for page_number in 1..total_pages
+          jump_to_page(page_number)
+          locations += fetch_locations_from_current_page
         end
+      else
+        locations += fetch_locations_from_current_page
       end
       
       locations
     end
 
     def pagination
-      # #locationList_gridSearchResults is table contains locations
-      # .gridPager is pagination location page
       @page.at('#locationList_gridSearchResults .gridPager')
     end
 
+    def location_results_paginated?
+      !!pagination
+    end
+
     def total_pages
-      # only get end page from string. Sample: "Page 1 of 3 (from 42 rows)"
       pagination.children[1].text.strip.scan(/^Page [0-9]+ of ([0-9]+).*/).first.first.to_i
     end
 
     def jump_to_page(page_number)
-      #submit with __EVENTARGUMENT = Page$#{page_number} -> get another page list location
+      return @page if page_number == 1
+
       hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "Page$#{page_number}"
-      current_page = agent.submit hidden_form
+      @page = agent.submit hidden_form
     end
 
-    def jump_to_course_page(page, row_index)
-      # submit with __EVENTARGUMENT = click-rowindex -> get course page of location
-      hidden_form = page.form_with :id => "Form1"
+    def get_location_id(row_index)
+      hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
-      hidden_form['__EVENTARGUMENT'] = "click-#{row_index}"
+      hidden_form['__EVENTARGUMENT'] = "click-#{row_index-3}"
       course_page = agent.submit hidden_form
+
+      course_page.uri.to_s.scan(/LocationID=([0-9]+)/).first.first
     end
 
-    def fetch_locations_from_current_page(page)
-      locations_of_page = Array.new
+    def fetch_locations_from_current_page
+      locations_of_page = []
 
       # location_list is table contains locations in current page
-      location_list = page.at('#locationList_gridSearchResults').children
+      location_list = @page.at('#locationList_gridSearchResults').children
 
-      # get row location on current page from location_list
-      # on location_list table, location data start from row 3
-      # and at end table is excess row
-      excess_row_at_the_end_table = pagination.nil? ? 2 : 3
+      excess_row_at_the_end_table = location_results_paginated? ? 3 : 2
       start_location_row = 3
       end_location_row = location_list.count - excess_row_at_the_end_table
 
@@ -190,8 +186,7 @@ module CricosScrape
         location_row = location_list[i].children
 
         location_obj = Location.new
-        # after page redirect to course list, we get uri have LocationID
-        location_obj.location_id = jump_to_course_page(page,i-3).uri.to_s.scan(/LocationID=([0-9]+)/).first.first
+        location_obj.location_id = get_location_id(i)
         location_obj.name = find_value_of_field(location_row[1])
         location_obj.state = find_value_of_field(location_row[2])
         location_obj.number_of_courses = find_value_of_field(location_row[3])

@@ -8,9 +8,9 @@ describe CricosScrape::InstitutionImporter do
     before do
       allow(agent).to receive(:url_for).with(1).and_return(uri)
 
-      fake_agent = Mechanize.new
+      @fake_agent = Mechanize.new
       @location_id = "456"
-      allow_any_instance_of(Mechanize).to receive(:submit).and_return(fake_agent.get("#{uri}?LocationID=#{@location_id}"))
+      allow_any_instance_of(Mechanize).to receive(:submit).and_return(@fake_agent.get("#{uri}?LocationID=#{@location_id}"))
     end
 
     context 'when there is no institution found' do
@@ -64,10 +64,16 @@ describe CricosScrape::InstitutionImporter do
     end
 
     context 'when the response body contains pagination location' do
-      let(:uri) { institution_details_with_pagination_location_uri }
+      let(:uri) { institution_details_with_pagination_location_page_1_uri }
+
+      before do
+        page_1_uri = "#{institution_details_with_pagination_location_page_1_uri}?LocationID=#{@location_id}"
+        page_2_uri = "#{institution_details_with_pagination_location_page_2_uri}?LocationID=#{@location_id}"
+
+        allow_any_instance_of(Mechanize).to receive(:submit).and_return(@fake_agent.get(page_1_uri), @fake_agent.get(page_2_uri))
+      end
 
       its(:locations) do
-        #duplicate data because total page is 2. The same page is loaded twice
         locations = [
           #Locations on page 1
           Location.new(@location_id, "Albury", "NSW", "51"),
@@ -82,16 +88,8 @@ describe CricosScrape::InstitutionImporter do
           Location.new(@location_id, "St Marks Theological Centre", "ACT", "12"),
 
           #Locations on page 2
-          Location.new(@location_id, "Albury", "NSW", "51"),
-          Location.new(@location_id, "Bathurst", "NSW", "60"),
-          Location.new(@location_id, "Canberra Institute of Technology - City Campus", "ACT", "2"),
-          Location.new(@location_id, "CSU Study Centre Melbourne", "VIC", "22"),
-          Location.new(@location_id, "CSU Study Centre Sydney", "NSW", "21"),
-          Location.new(@location_id, "Dubbo", "NSW", "29"),
-          Location.new(@location_id, "Holmesglen Institute of TAFE", "VIC", "3"),
-          Location.new(@location_id, "Orange", "NSW", "41"),
-          Location.new(@location_id, "Ryde", "NSW", "1"),
-          Location.new(@location_id, "St Marks Theological Centre", "ACT", "12"),
+          Location.new(@location_id, "United Theological College", "NSW", "11"),
+          Location.new(@location_id, "Wagga Wagga", "NSW", "105"),
         ]
         is_expected.to eq locations
       end
