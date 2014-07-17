@@ -1,7 +1,7 @@
 module CricosScrape
   class InstitutionImporter
 
-    INSTITUTION_URL = 'http://cricos.deewr.gov.au/Institution/InstitutionDetails.aspx'
+    INSTITUTION_URL = 'http://cricos.deewr.gov.au/Institution/InstitutionDetailsOnePage.aspx'
 
     attr_reader :agent
     private :agent
@@ -23,6 +23,7 @@ module CricosScrape
       institution.total_capacity = find_total_capacity
       institution.website        = find_website
       institution.postal_address = find_postal_address
+      institution.locations      = find_location
 
       institution
     end
@@ -38,27 +39,27 @@ module CricosScrape
     end
 
     def find_provider_code
-      field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetInstitutionDetail_institutionDetail_lblProviderCode')
+      field = @page.at('#institutionDetails_lblProviderCode')
       find_value_of_field(field)
     end
 
     def find_trading_name
-      field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetInstitutionDetail_institutionDetail_lblInstitutionTradingName')
+      field = @page.at('#institutionDetails_lblInstitutionTradingName')
       find_value_of_field(field)
     end
 
     def find_name
-      field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetInstitutionDetail_institutionDetail_lblInstitutionName')
+      field = @page.at('#institutionDetails_lblInstitutionName')
       find_value_of_field(field)
     end
 
     def find_type
-      field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetInstitutionDetail_institutionDetail_lblInstitutionType')
+      field = @page.at('#institutionDetails_lblInstitutionType')
       find_value_of_field(field)
     end
 
     def find_total_capacity
-      field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetInstitutionDetail_institutionDetail_lblLocationCapacity')
+      field = @page.at('#institutionDetails_lblLocationCapacity')
 
       capacity = find_value_of_field(field)
       capacity = is_number?(capacity) ? capacity.to_i : nil
@@ -70,7 +71,7 @@ module CricosScrape
     end
 
     def find_website
-      field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetInstitutionDetail_institutionDetail_hplInstitutionWebAddress')
+      field = @page.at('#institutionDetails_hplInstitutionWebAddress')
       find_value_of_field(field)
     end
 
@@ -90,7 +91,7 @@ module CricosScrape
     def find_postal_address
       address = Address.new
 
-      address_lines = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetInstitutionDetail_institutionDetail_lblInstitutionPostalAddress').children.select { |node| node.is_a?(Nokogiri::XML::Text) }.map { |node| find_value_of_field(node) }
+      address_lines = @page.at('#institutionDetails_lblInstitutionPostalAddress').children.select { |node| node.is_a?(Nokogiri::XML::Text) }.map { |node| find_value_of_field(node) }
 
       case address_lines.count
       when 4
@@ -123,7 +124,81 @@ module CricosScrape
     # there is no record not found page
     # instead a search page is returned
     def institution_not_found?
-      @page.at('#contentBody h1').text == 'Education Institution Search'
+      find_value_of_field(@page.at('#pnlErrorMessage td:last')) == "The Provider ID entered is invalid - please try another."
+    end
+
+    def find_location
+      locations = []
+
+      if location_results_paginated?
+        for page_number in 1..total_pages
+          jump_to_page(page_number)
+          locations += fetch_locations_from_current_page
+        end
+      else
+        locations += fetch_locations_from_current_page
+      end
+      
+      locations
+    end
+
+    def pagination
+      @page.at('#locationList_gridSearchResults .gridPager')
+    end
+
+    def location_results_paginated?
+      !!pagination
+    end
+
+    def total_pages
+      pagination.children[1].text.strip[/^Page [0-9]+ of ([0-9]+).*/, 1].to_i
+    end
+
+    def current_pagination_page
+      pagination.children[1].text.strip[/^Page ([0-9]+) of [0-9]+.*/, 1].to_i
+    end
+
+    def jump_to_page(page_number)
+      return @page if page_number == current_pagination_page
+
+      hidden_form = @page.form_with :id => "Form1"
+      hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
+      hidden_form['__EVENTARGUMENT'] = "Page$#{page_number}"
+      @page = agent.submit hidden_form
+    end
+
+    def get_location_id(row_index)
+      hidden_form = @page.form_with :id => "Form1"
+      hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
+      hidden_form['__EVENTARGUMENT'] = "click-#{row_index-3}"
+      course_page = agent.submit hidden_form
+
+      course_page.uri.to_s[/LocationID=([0-9]+)/, 1]
+    end
+
+    def fetch_locations_from_current_page
+      locations_of_page = []
+
+      # location_list is table contains locations in current page
+      location_list = @page.at('#locationList_gridSearchResults').children
+
+      excess_row_at_the_end_table = location_results_paginated? ? 3 : 2
+      start_location_row = 3
+      end_location_row = location_list.count - excess_row_at_the_end_table
+
+      for i in start_location_row..end_location_row
+        location_row = location_list[i].children
+
+        location_obj = Location.new
+        location_obj.location_id = get_location_id(i)
+        location_obj.name = find_value_of_field(location_row[1])
+        location_obj.state = find_value_of_field(location_row[2])
+        location_obj.number_of_courses = find_value_of_field(location_row[3])
+
+        locations_of_page << location_obj
+      end
+
+      locations_of_page
     end
 
   end
