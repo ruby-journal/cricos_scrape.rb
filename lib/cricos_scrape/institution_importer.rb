@@ -173,7 +173,7 @@ module CricosScrape
       hidden_form['__EVENTARGUMENT'] = "click-#{row_index-3}"
       course_page = agent.submit hidden_form
 
-      course_page.uri.to_s.scan(/LocationID=([0-9]+)/).first.first
+      course_page.uri.to_s[/LocationID=([0-9]+)/, 1]
     end
 
     def fetch_locations_from_current_page
