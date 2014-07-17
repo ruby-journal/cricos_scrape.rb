@@ -130,42 +130,76 @@ module CricosScrape
     def find_location
       locations = []
 
-      page_list = @page.at('#locationList_gridSearchResults .gridPager')
+      # always get locations from first page loaded
+      locations.concat(fetch_locations_from_current_page(@page))
 
-      #count_page = [start_page, end_page]
-      count_page = page_list.nil? ? ["1", "1"] : page_list.children[1].text.strip.scan(/^Page ([0-9]+) of ([0-9]+).*/).first
-
-      for page in (count_page.first)..(count_page.last)
-
-        #submit with __EVENTARGUMENT = Page$#{page} -> get another page list location
-        hidden_form = @page.form_with :id => "Form1"
-        hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
-        hidden_form['__EVENTARGUMENT'] = "Page$#{page}"
-        current_page = agent.submit hidden_form
-
-        location_list = current_page.at('#locationList_gridSearchResults').children
-
-        #get row location in current page
-        for i in 3..(location_list.count - (page_list.nil? ? 2 : 3))
-          location_row = location_list[i].children
-
-          #submit with __EVENTARGUMENT = click-rowindex -> get course page of location
-          hidden_form = current_page.form_with :id => "Form1"
-          hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
-          hidden_form['__EVENTARGUMENT'] = "click-#{i-3}"
-          course_list = agent.submit hidden_form
-
-          location_obj = Location.new
-          location_obj.id = course_list.uri.to_s.scan(/LocationID=([0-9]+)/).first.first
-          location_obj.name = find_value_of_field(location_row[1])
-          location_obj.state = find_value_of_field(location_row[2])
-          location_obj.number_of_courses = find_value_of_field(location_row[3])
-
-          locations << location_obj
+      if !pagination.nil?
+        # start get location from page 2. Because we have taken the first page at the top
+        pages = 2..total_pages
+        
+        for page_number in pages
+          current_page = jump_to_page(page_number)
+          locations.concat(fetch_locations_from_current_page(current_page))
         end
       end
-
+      
       locations
+    end
+
+    def pagination
+      # #locationList_gridSearchResults is table contains locations
+      # .gridPager is pagination location page
+      @page.at('#locationList_gridSearchResults .gridPager')
+    end
+
+    def total_pages
+      # only get end page from string. Sample: "Page 1 of 3 (from 42 rows)"
+      pagination.children[1].text.strip.scan(/^Page [0-9]+ of ([0-9]+).*/).first.first.to_i
+    end
+
+    def jump_to_page(page_number)
+      #submit with __EVENTARGUMENT = Page$#{page_number} -> get another page list location
+      hidden_form = @page.form_with :id => "Form1"
+      hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
+      hidden_form['__EVENTARGUMENT'] = "Page$#{page_number}"
+      current_page = agent.submit hidden_form
+    end
+
+    def jump_to_course_page(page, row_index)
+      # submit with __EVENTARGUMENT = click-rowindex -> get course page of location
+      hidden_form = page.form_with :id => "Form1"
+      hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
+      hidden_form['__EVENTARGUMENT'] = "click-#{row_index}"
+      course_page = agent.submit hidden_form
+    end
+
+    def fetch_locations_from_current_page(page)
+      locations_of_page = Array.new
+
+      # location_list is table contains locations in current page
+      location_list = page.at('#locationList_gridSearchResults').children
+
+      # get row location on current page from location_list
+      # on location_list table, location data start from row 3
+      # and at end table is excess row
+      excess_row_at_the_end_table = pagination.nil? ? 2 : 3
+      start_location_row = 3
+      end_location_row = location_list.count - excess_row_at_the_end_table
+
+      for i in start_location_row..end_location_row
+        location_row = location_list[i].children
+
+        location_obj = Location.new
+        # after page redirect to course list, we get uri have LocationID
+        location_obj.location_id = jump_to_course_page(page,i-3).uri.to_s.scan(/LocationID=([0-9]+)/).first.first
+        location_obj.name = find_value_of_field(location_row[1])
+        location_obj.state = find_value_of_field(location_row[2])
+        location_obj.number_of_courses = find_value_of_field(location_row[3])
+
+        locations_of_page << location_obj
+      end
+
+      locations_of_page
     end
 
   end

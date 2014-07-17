@@ -7,6 +7,10 @@ describe CricosScrape::InstitutionImporter do
     subject(:institution) { agent.scrape_institution(1) }
     before do
       allow(agent).to receive(:url_for).with(1).and_return(uri)
+
+      fake_agent = Mechanize.new
+      @location_id = "456"
+      allow_any_instance_of(Mechanize).to receive(:submit).and_return(fake_agent.get("#{uri}?LocationID=#{@location_id}"))
     end
 
     context 'when there is no institution found' do
@@ -29,12 +33,6 @@ describe CricosScrape::InstitutionImporter do
       its(:postal_address) do
         is_expected.to eq Address.new('International Education Office', 'PO Box 968', 'NORTH SYDNEY', 'New South Wales', '2059')
       end
-
-      context 'when the response body not contains pagination location' do
-        its(:locations) do
-          is_expected.to eq [Location.new('123', 'Australian Catholic University', 'ACT', '42')]
-        end
-      end
     end
 
     context 'when the response body does not contains Address Line 2' do
@@ -49,45 +47,53 @@ describe CricosScrape::InstitutionImporter do
       its(:postal_address) do
         is_expected.to eq Address.new('GPO Box 158', nil, 'CANBERRA ACT', 'Australian Capital Territory', '2601')
       end
+    end
 
-      context 'when the response body contains pagination location' do
-        its(:locations) do
-          data = [
-            Location.new("456", "ACT Education and Training Directorate", "ACT", "2"),
-            Location.new("456", "Alfred Deakin High School", "ACT", "1"),
-            Location.new("456", "Amaroo School", "ACT", "1"),
-            Location.new("456", "Belconnen High", "ACT", "1"),
-            Location.new("456", "Campbell High School", "ACT", "1"),
-            Location.new("456", "Canberra College", "ACT", "1"),
-            Location.new("456", "Canberra High School", "ACT", "1"),
-            Location.new("456", "Caroline Chisholm School", "ACT", "1"),
-            Location.new("456", "Dickson College", "ACT", "1"),
-            Location.new("456", "Erindale College", "ACT", "1"),
 
-            Location.new("456", "ACT Education and Training Directorate", "ACT", "2"),
-            Location.new("456", "Alfred Deakin High School", "ACT", "1"),
-            Location.new("456", "Amaroo School", "ACT", "1"),
-            Location.new("456", "Belconnen High", "ACT", "1"),
-            Location.new("456", "Campbell High School", "ACT", "1"),
-            Location.new("456", "Canberra College", "ACT", "1"),
-            Location.new("456", "Canberra High School", "ACT", "1"),
-            Location.new("456", "Caroline Chisholm School", "ACT", "1"),
-            Location.new("456", "Dickson College", "ACT", "1"),
-            Location.new("456", "Erindale College", "ACT", "1"),
+    context 'when the response body not contains pagination location' do
+      let(:uri) { institution_details_without_pagination_location_uri }
 
-            Location.new("456", "ACT Education and Training Directorate", "ACT", "2"),
-            Location.new("456", "Alfred Deakin High School", "ACT", "1"),
-            Location.new("456", "Amaroo School", "ACT", "1"),
-            Location.new("456", "Belconnen High", "ACT", "1"),
-            Location.new("456", "Campbell High School", "ACT", "1"),
-            Location.new("456", "Canberra College", "ACT", "1"),
-            Location.new("456", "Canberra High School", "ACT", "1"),
-            Location.new("456", "Caroline Chisholm School", "ACT", "1"),
-            Location.new("456", "Dickson College", "ACT", "1"),
-            Location.new("456", "Erindale College", "ACT", "1"),
-          ]
-          is_expected.to eq data
-        end
+      its(:locations) do
+        locations = [
+          Location.new(@location_id, 'Bath Street Campus', 'NT', '1'),
+          Location.new(@location_id, 'Sadadeen Campus', 'NT', '2'),
+          Location.new(@location_id, 'Traeger Campus', 'NT', '2') ,
+        ]
+        is_expected.to eq locations
+      end
+    end
+
+    context 'when the response body contains pagination location' do
+      let(:uri) { institution_details_with_pagination_location_uri }
+
+      its(:locations) do
+        #duplicate data because total page is 2. The same page is loaded twice
+        locations = [
+          #Locations on page 1
+          Location.new(@location_id, "Albury", "NSW", "51"),
+          Location.new(@location_id, "Bathurst", "NSW", "60"),
+          Location.new(@location_id, "Canberra Institute of Technology - City Campus", "ACT", "2"),
+          Location.new(@location_id, "CSU Study Centre Melbourne", "VIC", "22"),
+          Location.new(@location_id, "CSU Study Centre Sydney", "NSW", "21"),
+          Location.new(@location_id, "Dubbo", "NSW", "29"),
+          Location.new(@location_id, "Holmesglen Institute of TAFE", "VIC", "3"),
+          Location.new(@location_id, "Orange", "NSW", "41"),
+          Location.new(@location_id, "Ryde", "NSW", "1"),
+          Location.new(@location_id, "St Marks Theological Centre", "ACT", "12"),
+
+          #Locations on page 2
+          Location.new(@location_id, "Albury", "NSW", "51"),
+          Location.new(@location_id, "Bathurst", "NSW", "60"),
+          Location.new(@location_id, "Canberra Institute of Technology - City Campus", "ACT", "2"),
+          Location.new(@location_id, "CSU Study Centre Melbourne", "VIC", "22"),
+          Location.new(@location_id, "CSU Study Centre Sydney", "NSW", "21"),
+          Location.new(@location_id, "Dubbo", "NSW", "29"),
+          Location.new(@location_id, "Holmesglen Institute of TAFE", "VIC", "3"),
+          Location.new(@location_id, "Orange", "NSW", "41"),
+          Location.new(@location_id, "Ryde", "NSW", "1"),
+          Location.new(@location_id, "St Marks Theological Centre", "ACT", "12"),
+        ]
+        is_expected.to eq locations
       end
     end
   end
