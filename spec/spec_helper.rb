@@ -31,4 +31,7 @@ def institution_details_with_pagination_location_page_2_uri
   "file://#{file}"
 end
 
-
+def courses_list_by_location_id_uri
+  file = File.expand_path("../fixtures/courses_list_by_location_id_uri.html", __FILE__)
+  "file://#{file}"
+end

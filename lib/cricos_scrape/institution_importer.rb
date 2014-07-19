@@ -164,14 +164,14 @@ module CricosScrape
       hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "Page$#{page_number}"
-      @page = agent.submit hidden_form
+      @page = hidden_form.submit(nil, {'action' => 'change-location-page'})
     end
 
     def get_location_id(row_index)
       hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "click-#{row_index-3}"
-      course_page = agent.submit hidden_form
+      course_page = hidden_form.submit(nil, {'action' => 'get-location-id'})
 
       course_page.uri.to_s[/LocationID=([0-9]+)/, 1]
     end
