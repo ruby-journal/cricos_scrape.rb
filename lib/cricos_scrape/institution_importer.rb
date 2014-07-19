@@ -16,14 +16,15 @@ module CricosScrape
       return if institution_not_found?
 
       institution = Institution.new
-      institution.provider_code  = find_provider_code
-      institution.trading_name   = find_trading_name
-      institution.name           = find_name
-      institution.type           = find_type
-      institution.total_capacity = find_total_capacity
-      institution.website        = find_website
-      institution.postal_address = find_postal_address
-      institution.locations      = find_location
+      institution.provider_code    = find_provider_code
+      institution.trading_name     = find_trading_name
+      institution.name             = find_name
+      institution.type             = find_type
+      institution.total_capacity   = find_total_capacity
+      institution.website          = find_website
+      institution.postal_address   = find_postal_address
+      institution.locations        = find_location
+      institution.contact_officers = find_contact_officers
 
       institution
     end
@@ -201,5 +202,65 @@ module CricosScrape
       locations_of_page
     end
 
+    def find_contact_officers
+      contact_officers = []
+
+      contact_officers << find_contact_officer_by('PrincipalExecutive')
+      contact_officers << find_contact_officer_by('InternationalStudent') if contains_international_student_contact?
+
+      contact_officers
+    end
+
+    def find_contact_officer_by(role)
+      @contact_officer_id = role == 'PrincipalExecutive' ? '#contactDetails_pnlPrincipalExecutiveOfficerDetails' : '#contactDetails_pnlInternationalStudentContactDetails'
+      @contact_officer_area = @page.at("#{@contact_officer_id} table").children
+
+      contact           = ContactOfficer.new
+      contact.role      = find_contact_officer_role
+      contact.name      = find_contact_officer_name
+      contact.title     = find_contact_officer_title
+      contact.phone     = find_contact_officer_phone
+      contact.facsimile = find_contact_officer_facsimile
+      contact.email     = find_contact_officer_email
+
+      contact
+    end
+
+    def find_contact_officer_role
+      field = @page.at("#{@contact_officer_id} h2")
+      # Trim last character ":" in field
+      find_value_of_field(field)[0..-2]
+    end
+
+    def find_contact_officer_name
+      row = @contact_officer_area[1].children
+      find_value_of_field(row[3])
+    end
+
+    def find_contact_officer_title
+      row = @contact_officer_area[3].children
+      find_value_of_field(row[3])
+    end
+
+    def find_contact_officer_phone
+      row = @contact_officer_area[5].children
+      find_value_of_field(row[3])
+    end
+
+    def find_contact_officer_facsimile
+      row = @contact_officer_area[7].children
+      find_value_of_field(row[3])
+    end
+
+    def find_contact_officer_email
+      row = @contact_officer_area[9]
+      find_value_of_field(row.children[3]) unless row.nil?
+    end
+
+    def contains_international_student_contact?
+      !!@page.at('#contactDetails_pnlInternationalStudentContactDetails')
+    end
+
   end
 end
+
