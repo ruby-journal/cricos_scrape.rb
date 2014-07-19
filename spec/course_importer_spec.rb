@@ -49,9 +49,9 @@ describe CricosScrape::CourseImporter do
     context 'when the response body not contains pagination location' do
       let(:uri) { course_details_without_pagination_uri }
 
-      its(:locations_id) do
-        locations_id = ["123", "456"]
-        is_expected.to eq locations_id
+      its(:location_ids) do
+        location_ids = ["123", "456"]
+        is_expected.to eq location_ids
       end
     end
 

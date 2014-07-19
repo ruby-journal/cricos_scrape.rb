@@ -21,9 +21,9 @@ module CricosScrape
       course.course_code = find_course_code
       course.dual_qualification = find_dual_qualification
       course.field_of_education = find_field_of_education
-      course.broad_field = find_broad_field
-      course.narrow_field = find_narrow_field
-      course.detailed_field = find_detailed_field
+      course.broad_field = find_education_broad_field
+      course.narrow_field = find_education_narrow_field
+      course.detailed_field = find_education_detailed_field
       course.course_level = find_course_level
       course.foundation_studies = find_foundation_studies
       course.work_component = find_work_component
@@ -32,7 +32,7 @@ module CricosScrape
       course.total_cost = find_total_cost
 
       course.contact = find_course_contact
-      course.locations_id = find_course_location
+      course.location_ids = find_course_location
 
       course
     end
@@ -50,7 +50,7 @@ module CricosScrape
     end
 
     def find_value_of_field(field)
-      field.nil? ? nil : field.text.strip
+      field.text.strip unless field.nil? 
     end
 
     def find_course_name
@@ -74,17 +74,17 @@ module CricosScrape
       find_value_of_field(row[3]).ord == 160 ? '' : find_value_of_field(row[3])
     end
 
-    def find_broad_field
+    def find_education_broad_field
       field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetCourseDetail_courseDetail_lblFieldOfEducationBroad1')
       find_value_of_field(field)
     end
 
-    def find_narrow_field
+    def find_education_narrow_field
       field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetCourseDetail_courseDetail_lblFieldOfEducationNarrow1')
       find_value_of_field(field)
     end
 
-    def find_detailed_field
+    def find_education_detailed_field
       field = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetCourseDetail_courseDetail_lblFieldOfEducationDetailed1')
       find_value_of_field(field)
     end
@@ -153,18 +153,18 @@ module CricosScrape
 
     #Get all locations of course
     def find_course_location
-      locations_id = []
+      location_ids = []
 
       if location_results_paginated?
         for page_number in 1..total_pages
           jump_to_page(page_number)
-          locations_id += fetch_locations_id_from_current_page
+          location_ids += fetch_location_ids_from_current_page
         end
       else
-        locations_id += fetch_locations_id_from_current_page
+        location_ids += fetch_location_ids_from_current_page
       end
       
-      locations_id
+      location_ids
     end
 
     def pagination
@@ -201,8 +201,8 @@ module CricosScrape
       course_page.uri.to_s[/LocationID=([0-9]+)/, 1]
     end
 
-    def fetch_locations_id_from_current_page
-      locations_id = []
+    def fetch_location_ids_from_current_page
+      location_ids = []
 
       # location_list is table contains locations in current page
       location_list = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetCourseDetail_courseLocationList_gridSearchResults').children
@@ -212,10 +212,10 @@ module CricosScrape
       end_location_row = location_list.count - excess_row_at_the_end_table
 
       for i in start_location_row..end_location_row
-        locations_id << get_location_id(i)
+        location_ids << get_location_id(i)
       end
 
-      locations_id
+      location_ids
     end
 
   end
