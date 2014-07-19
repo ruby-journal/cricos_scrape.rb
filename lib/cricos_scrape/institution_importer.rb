@@ -151,11 +151,11 @@ module CricosScrape
     end
 
     def total_pages
-      pagination.children[1].text.strip.scan(/^Page [0-9]+ of ([0-9]+).*/).first.first.to_i
+      pagination.children[1].text.strip[/^Page [0-9]+ of ([0-9]+).*/, 1].to_i
     end
 
     def current_pagination_page
-      pagination.children[1].text.strip.scan(/^Page ([0-9]+) of [0-9]+.*/).first.first.to_i
+      pagination.children[1].text.strip[/^Page ([0-9]+) of [0-9]+.*/, 1].to_i
     end
 
     def jump_to_page(page_number)
@@ -164,16 +164,16 @@ module CricosScrape
       hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "Page$#{page_number}"
-      @page = agent.submit hidden_form
+      @page = hidden_form.submit(nil, {'action' => 'change-location-page'})
     end
 
     def get_location_id(row_index)
       hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "click-#{row_index-3}"
-      course_page = agent.submit hidden_form
+      course_page = hidden_form.submit(nil, {'action' => 'get-location-id'})
 
-      course_page.uri.to_s.scan(/LocationID=([0-9]+)/).first.first
+      course_page.uri.to_s[/LocationID=([0-9]+)/, 1]
     end
 
     def fetch_locations_from_current_page
