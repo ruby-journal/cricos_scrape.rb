@@ -35,3 +35,13 @@ def courses_list_by_location_id_uri
   file = File.expand_path("../fixtures/courses_list_by_location_id_uri.html", __FILE__)
   "file://#{file}"
 end
+
+def not_found_course_details_uri
+  file = File.expand_path("../fixtures/not_found_course_details_uri.html", __FILE__)
+  "file://#{file}"
+end
+
+def course_details_without_pagination_uri
+  file = File.expand_path("../fixtures/course_details_without_pagination_uri.html", __FILE__)
+  "file://#{file}"
+end
