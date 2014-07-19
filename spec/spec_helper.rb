@@ -31,6 +31,11 @@ def institution_details_with_pagination_location_page_2_uri
   "file://#{file}"
 end
 
+def courses_list_by_location_id_uri
+  file = File.expand_path("../fixtures/courses_list_by_location_id_uri.html", __FILE__)
+  "file://#{file}"
+end
+
 def contact_details_of_state_act_uri
   file = File.expand_path("../fixtures/contact_details_of_state_act_uri.html", __FILE__)
   "file://#{file}"
@@ -38,5 +43,15 @@ end
 
 def contact_details_of_state_wa_uri
   file = File.expand_path("../fixtures/contact_details_of_state_wa_uri.html", __FILE__)
+  "file://#{file}"
+end
+
+def not_found_course_details_uri
+  file = File.expand_path("../fixtures/not_found_course_details_uri.html", __FILE__)
+  "file://#{file}"
+end
+
+def course_details_without_pagination_uri
+  file = File.expand_path("../fixtures/course_details_without_pagination_uri.html", __FILE__)
   "file://#{file}"
 end
