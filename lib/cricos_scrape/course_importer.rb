@@ -12,7 +12,6 @@ module CricosScrape
 
     def scrape_course(course_id)
       @page = agent.get(url_for(course_id))
-      #require 'debugger';debugger
 
       return if course_not_found?
 
@@ -71,6 +70,7 @@ module CricosScrape
 
     def find_field_of_education
       row = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetCourseDetail_courseDetail_trFofEHeader').children
+      # if value of field return 1 character unicode. Then return empty string
       find_value_of_field(row[3]).ord == 160 ? '' : find_value_of_field(row[3])
     end
 
