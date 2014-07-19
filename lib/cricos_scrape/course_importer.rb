@@ -70,7 +70,7 @@ module CricosScrape
 
     def find_field_of_education
       row = @page.at('#ctl00_cphDefaultPage_tabContainer_sheetCourseDetail_courseDetail_trFofEHeader').children
-      # if value of field return 1 character unicode. Then return empty string
+      # NOTE: A space lookalike character might be returned. This is to ensure its conversion to a correct space
       find_value_of_field(row[3]).ord == 160 ? '' : find_value_of_field(row[3])
     end
 
