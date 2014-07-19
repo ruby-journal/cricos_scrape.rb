@@ -16,6 +16,7 @@ module CricosScrape
       return if institution_not_found?
 
       institution = Institution.new
+      institution.id             = provider_id
       institution.provider_code  = find_provider_code
       institution.trading_name   = find_trading_name
       institution.name           = find_name
@@ -25,7 +26,11 @@ module CricosScrape
       institution.postal_address = find_postal_address
       institution.locations      = find_location
 
-      institution
+      file_path = File.expand_path("../../../datas/institution.json", __FILE__)
+      separate_char = File.zero?(file_path) ? '' : ','
+      File.open(file_path, "a") do |file|
+        file.write(separate_char + institution.to_json)
+      end
     end
 
     private
