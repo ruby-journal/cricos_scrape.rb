@@ -5,7 +5,8 @@ describe CricosScrape::ContactImporter do
   describe '#scrape_contact' do
     let(:agent) { CricosScrape::ContactImporter.new }
     before do
-      CricosScrape::ContactImporter::STATES_CODE = ['ACT', 'WA']
+      stub_const("CricosScrape::ContactImporter::STATES_CODE", ['ACT', 'WA'])
+      
       allow(agent).to receive(:url_for).with('ACT').and_return(contact_details_of_state_act_uri)
       allow(agent).to receive(:url_for).with('WA').and_return(contact_details_of_state_wa_uri)
       
@@ -14,7 +15,7 @@ describe CricosScrape::ContactImporter do
 
     context 'when the response body contains with states ACT and WA' do
       it 'returns array contacts array' do
-        datas = [
+        data = [
           #contacts of ACT
           Contact.new('School Courses (and ELICOS and Foundation Programs where delivered by a school)', 
             'Ms Rebecca Hughes', 
@@ -67,7 +68,7 @@ describe CricosScrape::ContactImporter do
           ),
         ]
 
-        expect(@contacts).to eq datas
+        expect(@contacts).to eq data
       end
     end
   end
