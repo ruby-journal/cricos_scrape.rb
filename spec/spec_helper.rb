@@ -31,4 +31,12 @@ def institution_details_with_pagination_location_page_2_uri
   "file://#{file}"
 end
 
+def not_found_course_details_uri
+  file = File.expand_path("../fixtures/not_found_course_details_uri.html", __FILE__)
+  "file://#{file}"
+end
 
+def course_details_without_pagination_uri
+  file = File.expand_path("../fixtures/course_details_without_pagination_uri.html", __FILE__)
+  "file://#{file}"
+end
