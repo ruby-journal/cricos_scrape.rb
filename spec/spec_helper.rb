@@ -36,6 +36,16 @@ def courses_list_by_location_id_uri
   "file://#{file}"
 end
 
+def contact_details_of_state_act_uri
+  file = File.expand_path("../fixtures/contact_details_of_state_act_uri.html", __FILE__)
+  "file://#{file}"
+end
+
+def contact_details_of_state_wa_uri
+  file = File.expand_path("../fixtures/contact_details_of_state_wa_uri.html", __FILE__)
+  "file://#{file}"
+end
+
 def not_found_course_details_uri
   file = File.expand_path("../fixtures/not_found_course_details_uri.html", __FILE__)
   "file://#{file}"

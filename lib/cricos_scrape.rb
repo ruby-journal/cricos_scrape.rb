@@ -9,3 +9,4 @@ require_relative 'cricos_scrape/contact'
 
 require_relative 'cricos_scrape/course_importer'
 require_relative 'cricos_scrape/institution_importer'
+require_relative 'cricos_scrape/contact_importer'
