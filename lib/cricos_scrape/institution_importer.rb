@@ -16,14 +16,15 @@ module CricosScrape
       return if institution_not_found?
 
       institution = Institution.new
-      institution.provider_code  = find_provider_code
-      institution.trading_name   = find_trading_name
-      institution.name           = find_name
-      institution.type           = find_type
-      institution.total_capacity = find_total_capacity
-      institution.website        = find_website
-      institution.postal_address = find_postal_address
-      institution.locations      = find_location
+      institution.provider_code    = find_provider_code
+      institution.trading_name     = find_trading_name
+      institution.name             = find_name
+      institution.type             = find_type
+      institution.total_capacity   = find_total_capacity
+      institution.website          = find_website
+      institution.postal_address   = find_postal_address
+      institution.locations        = find_location
+      institution.contact_officers = find_contact_officers
 
       institution
     end
@@ -199,6 +200,95 @@ module CricosScrape
       end
 
       locations_of_page
+    end
+
+    def find_contact_officers
+      contact_officers = []
+
+      contact_officers_list = @page.search('//div[starts-with(@id, "contactDetails_pnl")]')
+
+      contact_officers_list.each do |contact_officer|
+        @contact_officer_area = contact_officer
+        @contact_officer_table = @contact_officer_area.at('table').children
+        
+        if contains_contact_details_grid?
+          contact_officers += find_contact_officer_grid
+        else
+          contact_officers << find_contact_officer
+        end
+      end
+
+      contact_officers
+    end
+
+    def find_contact_officer_grid
+      contact_officers = []
+
+      excess_row_at_the_end_table = 2
+      data_row_start = 3
+      data_row_end = @contact_officer_table.count - excess_row_at_the_end_table
+
+      for i in data_row_start..data_row_end
+        contact_row = @contact_officer_table[i].children
+
+        contact = ContactOfficer.new
+        contact.role      = find_contact_officer_role
+        contact.name      = find_value_of_field(contact_row[1])
+        contact.phone     = find_value_of_field(contact_row[2])
+        contact.fax       = find_value_of_field(contact_row[3])
+        contact.email     = find_value_of_field(contact_row[4])
+
+        contact_officers << contact
+      end
+
+      contact_officers
+    end
+
+    def find_contact_officer
+      contact           = ContactOfficer.new
+      contact.role      = find_contact_officer_role
+      contact.name      = find_contact_officer_name
+      contact.title     = find_contact_officer_title
+      contact.phone     = find_contact_officer_phone
+      contact.fax       = find_contact_officer_fax
+      contact.email     = find_contact_officer_email
+
+      contact
+    end
+
+    def find_contact_officer_role
+      row = @contact_officer_area.children
+      find_value_of_field(row[1]).sub(':', '')
+    end
+
+    def find_contact_officer_name
+      row = @contact_officer_table[1].children
+      find_value_of_field(row[3])
+    end
+
+    def find_contact_officer_title
+      row = @contact_officer_table[3].children
+      find_value_of_field(row[3])
+    end
+
+    def find_contact_officer_phone
+      row = @contact_officer_table[5].children
+      find_value_of_field(row[3])
+    end
+
+    def find_contact_officer_fax
+      row = @contact_officer_table[7].children
+      find_value_of_field(row[3])
+    end
+
+    def find_contact_officer_email
+      row = @contact_officer_table[9]
+      find_value_of_field(row.children[3]) unless row.nil?
+    end
+
+    def contains_contact_details_grid?
+      contact_officer_area_css_id = @contact_officer_area.attributes['id'].text
+      @page.search("//*[@id='#{contact_officer_area_css_id}']/div/table[starts-with(@id, 'contactDetails_grid')]").any?
     end
 
   end

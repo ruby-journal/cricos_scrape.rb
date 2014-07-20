@@ -50,6 +50,26 @@ describe CricosScrape::InstitutionImporter do
       end
     end
 
+    context 'when the response body contains both Principal Executive Officer and International Student Contact' do
+      let(:uri) { institution_details_without_pagination_location_uri }
+
+      its(:contact_officers) do
+        data = [
+          ContactOfficer.new('Principal Executive Officer', 'Matthew Green', 'Principal', '0889506400', '0889524607', nil),
+          ContactOfficer.new('International Student Contact', 'ROCHELLE Marshall', 'Secretary', '0889506400', '0889524607', 'rochelle.marshall@nt.catholic.edu.au')
+        ]
+        is_expected.to eq data
+      end
+    end
+
+    context 'when the response body only contains Principal Executive Officer' do
+      let(:uri) { institution_details_with_po_box_postal_address_uri }
+
+      its(:contact_officers) do
+        is_expected.to eq [ContactOfficer.new('Principal Executive Officer', 'Rachael Shanahan', 'Director, Education Services', '0889011336', '0889995788', nil)]
+      end
+    end
+
     context 'when the response body not contains pagination location' do
       let(:uri) { institution_details_without_pagination_location_uri }
       
@@ -91,6 +111,17 @@ describe CricosScrape::InstitutionImporter do
           Location.new("456", "Wagga Wagga", "NSW", "105"),
         ]
         is_expected.to eq locations
+      end
+
+      context 'when the contact officers contains table grid' do
+        its(:contact_officers) do
+          data = [
+            ContactOfficer.new('Principal Executive Officer', 'Andrew Vann', 'Vice-Chancellor', '02 6338 4209', '02 6338 4809', nil),
+            ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 63657537', '02 63657590', 'mevans@csu.edu.au'),
+            ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 6365 7537', '02 6365 7590', 'mevans@csu.edu.au')
+          ]
+          is_expected.to eq data
+        end
       end
     end
   end
