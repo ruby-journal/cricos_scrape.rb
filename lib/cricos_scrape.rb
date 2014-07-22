@@ -1,6 +1,10 @@
 require 'rubygems'
 require 'mechanize'
+require 'json'
+require 'json/add/core'
 
+require_relative 'cricos_scrape/json_struct'
+require_relative 'cricos_scrape/json_file_store'
 require_relative 'cricos_scrape/address'
 require_relative 'cricos_scrape/institution'
 require_relative 'cricos_scrape/location'
