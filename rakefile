@@ -4,25 +4,25 @@ require_relative 'lib/bulk_import_courses'
 require_relative 'lib/bulk_import_contacts'
 
 namespace :import do
-	
-	task :institution do
-		id_min  = ENV['ID_MIN'].to_i || 1
-		id_max  = ENV['ID_MAX'].to_i || 10000
-		id_file = ENV['ID_FILE']
+  
+  task :institution do
+    id_min  = ENV['ID_MIN'].to_i || 1
+    id_max  = ENV['ID_MAX'].to_i || 10000
+    id_file = ENV['ID_FILE']
 
     BulkImportInstitution::get(id_min, id_max, id_file)
   end
 
   task :course do
-		id_min  = ENV['ID_MIN'].to_i || 1
-		id_max  = ENV['ID_MAX'].to_i || 10000
-		id_file = ENV['ID_FILE']
+    id_min  = ENV['ID_MIN'].to_i || 1
+    id_max  = ENV['ID_MAX'].to_i || 10000
+    id_file = ENV['ID_FILE']
 
     BulkImportCourse::get(id_min, id_max, id_file)
   end
 
   task :contact do
-  	BulkImportContact::get
+    BulkImportContact::get
   end
 
 end
