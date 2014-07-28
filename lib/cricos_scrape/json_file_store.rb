@@ -13,6 +13,10 @@ class JsonFileStore
     end
   end
 
+  def data_file_empty?
+    !File.exist?(file_path) || File.zero?(file_path)
+  end
+
   private
   def save_data_to_new_file
     data_string = @entity.is_a?(Array) ? @entity.to_json : "[#{@entity.to_json}]"
@@ -30,9 +34,5 @@ class JsonFileStore
 
   def file_path
     File.expand_path("../../../data/#{@file}", __FILE__)
-  end
-
-  def data_file_empty?
-    !File.exist?(file_path) || File.zero?(file_path)
   end
 end

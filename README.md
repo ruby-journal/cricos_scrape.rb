@@ -25,13 +25,19 @@ Support scrapping following entities:
   Get Institution with file id list
   <code>bundle exec rake import:institution ID_FILE=<path></code>
 
+  Store data to specify file
+  <code>bundle exec rake import:institution RESULTS_DATA_FILE=<file_name> RESULTS_IDS_FILE=<file_name></code>
+
 * Course
   Similar Institution
   <code>bundle exec rake import:course</code>
 
 * Contact
   To get all contacts
-  <code>bundle exec rake import:contact</code>  
+  <code>bundle exec rake import:contact</code>
+
+  To get all contacts and overwrite old data
+  <code>bundle exec rake import:contact OVERWRITE=true</code>
 
 # License
 
