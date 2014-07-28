@@ -16,6 +16,7 @@ module CricosScrape
       return if institution_not_found?
 
       institution = Institution.new
+      institution.provider_id      = provider_id
       institution.provider_code    = find_provider_code
       institution.trading_name     = find_trading_name
       institution.name             = find_name
