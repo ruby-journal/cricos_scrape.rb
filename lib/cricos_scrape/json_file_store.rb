@@ -13,6 +13,7 @@ class JsonFileStore
     end
   end
 
+  private
   def save_data_to_new_file
     data_string = @entity.is_a?(Array) ? @entity.to_json : "[#{@entity.to_json}]"
     File.open(file_path, "a") { |file| file.write(data_string) }

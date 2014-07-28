@@ -10,7 +10,7 @@ namespace :import do
     id_max  = ENV['ID_MAX'].to_i || 10000
     id_file = ENV['ID_FILE']
 
-    BulkImportInstitution::get(id_min, id_max, id_file)
+    BulkImportInstitutions::new(id_min, id_max, id_file).perform
   end
 
   task :course do
