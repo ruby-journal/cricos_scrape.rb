@@ -3,16 +3,13 @@ class BulkImportContacts
 
   def initialize(results_file, overwrite = false)
     @overwrite = overwrite
-
     @contacts_file = JsonFileStore.new(results_file)
-
     @contact_importer = CricosScrape::ContactImporter.new
   end
 
   def perform
-    if create_new_data_contacts_file?
+    if should_create_new_data_contacts_file?
       scrape_contact_and_save_to_file
-
       puts "Success to get Contacts"
     else
       puts "Contacts have been taken"
@@ -23,9 +20,11 @@ class BulkImportContacts
   def scrape_contact_and_save_to_file
     contacts = @contact_importer.scrape_contact
     @contacts_file.save(contacts)
+  rescue => e
+    puts "An error occurred when scrape contacts"
   end
 
-  def create_new_data_contacts_file?
+  def should_create_new_data_contacts_file?
     @contacts_file.data_file_empty? || @overwrite
   end
 end

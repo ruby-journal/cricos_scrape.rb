@@ -1,5 +1,6 @@
 require_relative '../lib/cricos_scrape'
 require_relative '../lib/bulk_import_institutions'
+require_relative '../lib/bulk_import_contacts'
 require 'rspec/its'
 
 def institution_details_with_po_box_postal_address_uri
