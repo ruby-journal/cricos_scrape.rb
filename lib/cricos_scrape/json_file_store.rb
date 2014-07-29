@@ -6,14 +6,14 @@ class JsonFileStore
   def save(entity)
     @entity = entity
     
-    if data_file_empty?
+    if empty_data_file?
       save_data_to_new_file
     else
       append_data_to_file
     end
   end
 
-  def data_file_empty?
+  def empty_data_file?
     !File.exist?(file_path) || File.zero?(file_path)
   end
 
