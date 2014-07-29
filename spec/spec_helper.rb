@@ -1,4 +1,5 @@
 require_relative '../lib/cricos_scrape'
+require_relative '../lib/bulk_import_institutions'
 require 'rspec/its'
 
 def institution_details_with_po_box_postal_address_uri
@@ -54,4 +55,19 @@ end
 def course_details_without_pagination_uri
   file = File.expand_path("../fixtures/course_details_without_pagination_uri.html", __FILE__)
   "file://#{file}"
+end
+
+def capture_stdout(&block)
+  original_stdout = $stdout
+  $stdout = fake = StringIO.new
+  begin
+    yield
+  ensure
+    $stdout = original_stdout
+  end
+  fake.string
+end
+
+def data_file_path(file_name)
+  File.expand_path("../../data/#{file_name}", __FILE__)
 end
