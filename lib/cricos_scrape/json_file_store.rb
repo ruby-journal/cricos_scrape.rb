@@ -6,29 +6,23 @@ class JsonFileStore
   def save(entity)
     backup_old_file
     @entity = entity
-    
-    if empty_data_file?
-      save_data_to_new_file
-    else
-      append_data_to_file
-    end
-
+    file_empty? ? save_data_to_new_file : append_data_to_file
     remove_tmp_file
   end
 
-  def empty_data_file?
+  def file_empty?
     !File.exist?(file_path) || File.zero?(file_path)
   end
 
   def rollback
     FileUtils.rm_rf(file_path)
-    FileUtils.copy(file_path("tmp_#{@file}"), file_path) unless empty_data_file?
+    FileUtils.copy(file_path("tmp_#{@file}"), file_path) unless file_empty?
     FileUtils.rm_rf(file_path("tmp_#{@file}"))
   end
 
   private
   def backup_old_file
-    FileUtils.copy(file_path, file_path("tmp_#{@file}")) unless empty_data_file?
+    FileUtils.copy(file_path, file_path("tmp_#{@file}")) unless file_empty?
   end
 
   def remove_tmp_file

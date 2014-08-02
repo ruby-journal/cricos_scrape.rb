@@ -3,20 +3,20 @@ require 'spec_helper'
 describe JsonFileStore do
 
   describe '#save' do
-    let(:results_file) { 'spec_json_file_store.json' }
+    let(:output) { 'spec_json_file_store.json' }
     let(:institution1) { Institution.new(1) }
-    subject(:json_file) { JsonFileStore.new(results_file) }
+    subject(:json_file) { JsonFileStore.new(output) }
     
-    context 'when #empty_data_file? is true' do
-      context 'when does not exist file' do
-        before { FileUtils.rm_rf(data_file_path(results_file)) }
+    context 'when file is empty' do
+      context 'when file doesnt exist' do
+        before { FileUtils.rm_rf(data_file_path(output)) }
 
         context 'when entity is array' do
           let(:entity) { [institution1] }
           before { json_file.save(entity) }
 
           it 'creates new data file' do
-            expect(File.exist?(data_file_path(results_file))).to be true
+            expect(File.exist?(data_file_path(output))).to be true
           end
         end
 
@@ -25,32 +25,32 @@ describe JsonFileStore do
           before { json_file.save(entity) }
 
           it 'creates new data file' do
-            expect(File.exist?(data_file_path(results_file))).to be true
+            expect(File.exist?(data_file_path(output))).to be true
           end
         end
       end
 
-      context 'when exist file' do
+      context 'when file exist' do
         context 'when empty file' do
           before do
-            FileUtils.touch(data_file_path(results_file))
+            FileUtils.touch(data_file_path(output))
             json_file.save(institution1)
           end
 
           it 'creates new data file' do
-            expect(File.exist?(data_file_path(results_file))).to be true
+            expect(File.exist?(data_file_path(output))).to be true
           end
         end
 
-        context 'when contains data in file' do
+        context 'when file has data' do
           let(:institution2) { Institution.new(2) }
           before do
-            File.open(data_file_path(results_file), 'w') { |f| f.write([institution1].to_json) }
+            File.open(data_file_path(output), 'w') { |f| f.write([institution1].to_json) }
             json_file.save(institution2)
           end
 
           it 'appends data to file' do
-            expect(File.read(data_file_path(results_file))).to eq [institution1, institution2].to_json
+            expect(File.read(data_file_path(output))).to eq [institution1, institution2].to_json
           end
         end
       end
