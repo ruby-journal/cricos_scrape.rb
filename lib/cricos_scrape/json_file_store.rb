@@ -15,9 +15,11 @@ class JsonFileStore
   def rollback
     unless file_empty?
       data = JSON.parse(File.read(file_path))
-      data.pop if data.last.to_json == @entity.to_json
-      @entity = data
-      save_data_to_new_file
+      if data.last.to_json == @entity.to_json
+        data.pop
+        @entity = data
+        save_data_to_new_file
+      end
     end
   end
 
