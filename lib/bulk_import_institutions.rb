@@ -12,7 +12,7 @@ class BulkImportInstitutions
 
   def perform
     @range.each do |providerID|
-      puts "Success with ProviderID #{providerID}" if scrape_institution_and_save_to_file(providerID)
+      scrape_institution_and_save_to_file(providerID)
     end
   end
 
@@ -25,6 +25,7 @@ class BulkImportInstitutions
   def save_institution_data_to_file(providerID, institution)
     @institution_ids_file.save(providerID)
     @institutions_file.save(institution)
+    puts "Success with ProviderID #{providerID}"
   rescue => e
     @institutions_file.rollback
     @institution_ids_file.rollback
