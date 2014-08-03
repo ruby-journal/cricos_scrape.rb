@@ -19,7 +19,11 @@ class BulkImportInstitutions
   private
   def scrape_institution_and_save_to_file(providerID)
     institution = @importer.scrape_institution(providerID)
-    institution ? save_institution_data_to_file(providerID, institution) : (puts "The Provider ID #{providerID} entered is invalid - please try another.")
+    if institution
+      save_institution_data_to_file(providerID, institution)
+    else
+      puts "The Provider ID #{providerID} entered is invalid - please try another."
+    end
   end
 
   def save_institution_data_to_file(providerID, institution)

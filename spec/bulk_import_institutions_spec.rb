@@ -15,6 +15,8 @@ describe BulkImportInstitutions do
       let(:min_id) { 3 }
       let(:max_id) { 4 }
       let(:input) { nil }
+      let(:institution_data_result) { [Institution.new(3), Institution.new(4)].to_json }
+      let(:institution_ids_result) { [3, 4].to_json }
 
       context 'when institution exists' do
         context 'when successful data storage' do
@@ -25,11 +27,11 @@ describe BulkImportInstitutions do
           end
 
           it 'stores institutions data file' do
-            expect(File.read(data_file_path(output_file['data']))).to eq [Institution.new(3), Institution.new(4)].to_json
+            expect(File.read(data_file_path(output_file['data']))).to eq institution_data_result
           end
 
           it 'stores institution ids file' do
-            expect(File.read(data_file_path(output_file['ids']))).to eq [3, 4].to_json
+            expect(File.read(data_file_path(output_file['ids']))).to eq institution_ids_result
           end
         end
 
@@ -65,6 +67,7 @@ describe BulkImportInstitutions do
       let(:min_id) { nil }
       let(:max_id) { nil }
       let(:input) { 'data/tmp_input' }
+      let(:institution_ids_result) { [1, 2, 3, 5].to_json }
 
       before do
         File.open(input, 'w') {|f| f.write("1,2,3,5") }
@@ -74,7 +77,7 @@ describe BulkImportInstitutions do
       end
 
       it 'stores institution ids file' do
-        expect(File.read(data_file_path(output_file['ids']))).to eq [1, 2, 3, 5].to_json
+        expect(File.read(data_file_path(output_file['ids']))).to eq institution_ids_result
       end
     end
   end
