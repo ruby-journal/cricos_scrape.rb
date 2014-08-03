@@ -2,6 +2,7 @@ require 'rubygems'
 require 'mechanize'
 require 'json'
 require 'json/add/core'
+require 'fileutils'
 
 require_relative 'cricos_scrape/json_struct'
 require_relative 'cricos_scrape/json_file_store'
