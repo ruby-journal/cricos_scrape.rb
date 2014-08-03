@@ -55,3 +55,7 @@ def course_details_without_pagination_uri
   file = File.expand_path("../fixtures/course_details_without_pagination_uri.html", __FILE__)
   "file://#{file}"
 end
+
+def data_file_path(file_name)
+  File.expand_path("../../data/#{file_name}", __FILE__)
+end
