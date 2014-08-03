@@ -15,6 +15,19 @@ Support scrapping following entities:
 
 # Usage
 
+* Institution
+  Get Institution with default agrument (MIN_ID=1, MAX_ID=10000)
+  <code>bundle exec rake import:institution</code>
+
+  Get Institution with specify agrument
+  <code>bundle exec rake import:institution MIN_ID=1 MAX_ID=10000</code>
+
+  Get Institution with file id list
+  <code>bundle exec rake import:institution FILE_INPUT=<path></code>
+
+  Store data to specify file
+  <code>bundle exec rake import:institution OUTPUT_DATA_FILE=<file_name> OUTPUT_ID_FILE=<file_name></code>
+
 TO BE DOCUMENTED
 
 # License

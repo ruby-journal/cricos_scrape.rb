@@ -15,3 +15,5 @@ require_relative 'cricos_scrape/contact_officer'
 require_relative 'cricos_scrape/course_importer'
 require_relative 'cricos_scrape/institution_importer'
 require_relative 'cricos_scrape/contact_importer'
+
+require_relative 'bulk_import_institutions'

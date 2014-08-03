@@ -59,3 +59,14 @@ end
 def data_file_path(file_name)
   File.expand_path("../../data/#{file_name}", __FILE__)
 end
+
+def capture_stdout(&block)
+  original_stdout = $stdout
+  $stdout = fake = StringIO.new
+  begin
+    yield
+  ensure
+    $stdout = original_stdout
+  end
+  fake.string
+end
