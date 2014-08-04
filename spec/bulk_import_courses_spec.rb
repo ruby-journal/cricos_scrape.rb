@@ -18,7 +18,7 @@ describe BulkImportCourses do
       let(:course_data_result) { [Course.new(3), Course.new(4)].to_json }
       let(:course_ids_result) { [3, 4].to_json }
 
-      context 'when course exists' do
+      context 'given course exists' do
         context 'when successful data storage' do
           let!(:output) { capture_stdout { importer.perform } }
 
@@ -35,7 +35,7 @@ describe BulkImportCourses do
           end
         end
 
-        context 'failed to save data' do
+        context 'when failed to save data' do
           before { allow_any_instance_of(JsonFileStore).to receive(:save).and_raise() }
           let!(:output) { capture_stdout { importer.perform } }
 

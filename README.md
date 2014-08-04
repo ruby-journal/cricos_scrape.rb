@@ -30,7 +30,7 @@ Support scrapping following entities:
 
 * Course
   Similar Institution
-  <code>bundle exec rake import:course</code>
+  <code>bundle exec rake import:courses</code>
 
 TO BE DOCUMENTED
 

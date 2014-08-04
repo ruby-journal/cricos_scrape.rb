@@ -15,7 +15,7 @@ namespace :import do
     BulkImportInstitutions::new(file_output ,min_id, max_id, file_input).perform
   end
 
-  task :course do
+  task :courses do
     file_output = {
       'data' => ENV['OUTPUT_DATA_FILE'] || 'courses.json',
       'ids' => ENV['OUTPUT_ID_FILE'] || 'course_ids.json'
