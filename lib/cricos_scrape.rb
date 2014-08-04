@@ -17,4 +17,5 @@ require_relative 'cricos_scrape/institution_importer'
 require_relative 'cricos_scrape/contact_importer'
 
 require_relative 'bulk_import_institutions'
+require_relative 'bulk_import_courses'
 require_relative 'bulk_import_contacts'
