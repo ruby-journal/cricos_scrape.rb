@@ -28,6 +28,16 @@ Support scrapping following entities:
   Store data to specify file
   <code>bundle exec rake import:institution OUTPUT_DATA_FILE=<file_name> OUTPUT_ID_FILE=<file_name></code>
 
+* Contact
+  To get all contacts
+  <code>bundle exec rake import:contacts</code>
+
+  To get all contacts and overwrite old data
+  <code>bundle exec rake import:contacts OVERWRITE=true</code>
+
+  Store data to specify file
+  <code>bundle exec rake import:contacts OUTPUT_FILE=<file_name></code>
+
 TO BE DOCUMENTED
 
 # License

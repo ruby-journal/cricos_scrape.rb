@@ -3,9 +3,9 @@ class JsonFileStore
     @file = file
   end
 
-  def save(entity)
+  def save(entity, overwrite = false)
     @entity = entity
-    file_empty? ? save_data_to_new_file : append_data_to_file
+    file_empty? || overwrite ? save_data_to_new_file : append_data_to_file
   end
 
   def file_empty?
