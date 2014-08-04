@@ -1,5 +1,5 @@
 class BulkImportContacts
-  attr_reader :results_file
+  attr_reader :overwrite
 
   def initialize(results_file, overwrite = false)
     @overwrite = overwrite
@@ -10,7 +10,6 @@ class BulkImportContacts
   def perform
     if should_create_new_data_contacts_file?
       scrape_contact_and_save_to_file
-      puts "Success to get Contacts"
     else
       puts "Contacts have been taken"
     end
@@ -19,7 +18,8 @@ class BulkImportContacts
   private
   def scrape_contact_and_save_to_file
     contacts = @contact_importer.scrape_contact
-    @contacts_file.save(contacts)
+    @contacts_file.save(contacts, @overwrite)
+    puts "Success to get Contacts"
   rescue => e
     puts "An error occurred when scrape contacts"
   end

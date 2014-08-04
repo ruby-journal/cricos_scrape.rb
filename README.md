@@ -30,13 +30,13 @@ Support scrapping following entities:
 
 * Contact
   To get all contacts
-  <code>bundle exec rake import:contact</code>
+  <code>bundle exec rake import:contacts</code>
 
   To get all contacts and overwrite old data
-  <code>bundle exec rake import:contact OVERWRITE=true</code>
+  <code>bundle exec rake import:contacts OVERWRITE=true</code>
 
   Store data to specify file
-  <code>bundle exec rake import:institution OUTPUT_FILE=<file_name></code>
+  <code>bundle exec rake import:contacts OUTPUT_FILE=<file_name></code>
 
 TO BE DOCUMENTED
 
