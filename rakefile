@@ -1,39 +1,23 @@
 require_relative 'lib/cricos_scrape'
-require_relative 'lib/bulk_import_institutions'
-require_relative 'lib/bulk_import_courses'
-require_relative 'lib/bulk_import_contacts'
 
 namespace :import do
   
   task :institution do
-    results_file = {
-      'data' => ENV['RESULTS_DATA_FILE'] || 'institutions.json',
-      'ids' => ENV['RESULTS_IDS_FILE'] || 'institution_ids.json'
+    file_output = {
+      'data' => ENV['OUTPUT_DATA_FILE'] || 'institutions.json',
+      'ids' => ENV['OUTPUT_ID_FILE'] || 'institution_ids.json'
     }
 
-    id_min  = ENV['ID_MIN'].to_i || 1
-    id_max  = ENV['ID_MAX'].to_i || 10000
-    id_file = ENV['ID_FILE']
+    min_id     = ENV['MIN_ID'].to_i || 1
+    max_id     = ENV['MAX_ID'].to_i || 10000
+    file_input = ENV['FILE_INPUT']
 
-    BulkImportInstitutions::new(results_file ,id_min, id_max, id_file).perform
-  end
-
-  task :course do
-    results_file = {
-      'data' => ENV['RESULTS_DATA_FILE'] || 'courses.json',
-      'ids' => ENV['RESULTS_IDS_FILE'] || 'course_ids.json'
-    }
-    
-    id_min  = ENV['ID_MIN'].to_i || 1
-    id_max  = ENV['ID_MAX'].to_i || 10000
-    id_file = ENV['ID_FILE']
-
-    BulkImportCourses::new(results_file ,id_min, id_max, id_file).perform
+    BulkImportInstitutions::new(file_output ,min_id, max_id, file_input).perform
   end
 
   task :contact do
-    results_file  = ENV['RESULTS_FILE'] || 'contacts.json'
-    BulkImportContacts::new(results_file, ENV['OVERWRITE']).perform
+    output_file  = ENV['OUTPUT_FILE'] || 'contacts.json'
+    BulkImportContacts::new(output_file, ENV['OVERWRITE']).perform
   end
 
 end

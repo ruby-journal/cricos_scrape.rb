@@ -25,6 +25,6 @@ class BulkImportContacts
   end
 
   def should_create_new_data_contacts_file?
-    @contacts_file.data_file_empty? || @overwrite
+    @contacts_file.file_empty? || @overwrite
   end
 end

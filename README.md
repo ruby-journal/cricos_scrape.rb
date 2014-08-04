@@ -16,21 +16,17 @@ Support scrapping following entities:
 # Usage
 
 * Institution
-  Get Institution with default agrument (ID_MIN=1, ID_MAX=10000)
+  Get Institution with default agrument (MIN_ID=1, MAX_ID=10000)
   <code>bundle exec rake import:institution</code>
 
   Get Institution with specify agrument
-  <code>bundle exec rake import:institution ID_MIN=1 ID_MAX=10000</code>
+  <code>bundle exec rake import:institution MIN_ID=1 MAX_ID=10000</code>
 
   Get Institution with file id list
-  <code>bundle exec rake import:institution ID_FILE=<path></code>
+  <code>bundle exec rake import:institution FILE_INPUT=<path></code>
 
   Store data to specify file
-  <code>bundle exec rake import:institution RESULTS_DATA_FILE=<file_name> RESULTS_IDS_FILE=<file_name></code>
-
-* Course
-  Similar Institution
-  <code>bundle exec rake import:course</code>
+  <code>bundle exec rake import:institution OUTPUT_DATA_FILE=<file_name> OUTPUT_ID_FILE=<file_name></code>
 
 * Contact
   To get all contacts
@@ -38,6 +34,11 @@ Support scrapping following entities:
 
   To get all contacts and overwrite old data
   <code>bundle exec rake import:contact OVERWRITE=true</code>
+
+  Store data to specify file
+  <code>bundle exec rake import:contact OUTPUT_FILE=<file_name></code>
+
+TO BE DOCUMENTED
 
 # License
 
