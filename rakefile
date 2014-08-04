@@ -8,8 +8,8 @@ namespace :import do
       'ids' => ENV['OUTPUT_ID_FILE'] || 'institution_ids.json'
     }
 
-    min_id     = ENV['MIN_ID'].to_i || 1
-    max_id     = ENV['MAX_ID'].to_i || 10000
+    min_id     = ENV['MIN_ID'] || 1
+    max_id     = ENV['MAX_ID'] || 10000
     file_input = ENV['FILE_INPUT']
 
     BulkImportInstitutions::new(file_output ,min_id, max_id, file_input).perform
