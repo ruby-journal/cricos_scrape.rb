@@ -15,4 +15,9 @@ namespace :import do
     BulkImportInstitutions::new(file_output ,min_id, max_id, file_input).perform
   end
 
+  task :contact do
+    output_file  = ENV['OUTPUT_FILE'] || 'contacts.json'
+    BulkImportContacts::new(output_file, ENV['OVERWRITE']).perform
+  end
+
 end
