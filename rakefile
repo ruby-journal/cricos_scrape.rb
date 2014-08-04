@@ -2,7 +2,7 @@ require_relative 'lib/cricos_scrape'
 
 namespace :import do
   
-  task :institution do
+  task :institutions do
     file_output = {
       'data' => ENV['OUTPUT_DATA_FILE'] || 'institutions.json',
       'ids' => ENV['OUTPUT_ID_FILE'] || 'institution_ids.json'

@@ -45,7 +45,7 @@ describe BulkImportInstitutions do
         end
       end
 
-      context 'when institution is not exist ' do
+      context 'when institution does not exist' do
         before { allow_any_instance_of(CricosScrape::InstitutionImporter).to receive(:scrape_institution).and_return(nil) }
         let!(:output) { capture_stdout { importer.perform } }
 
