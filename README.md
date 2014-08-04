@@ -28,6 +28,10 @@ Support scrapping following entities:
   Store data to specify file
   <code>bundle exec rake import:institution OUTPUT_DATA_FILE=<file_name> OUTPUT_ID_FILE=<file_name></code>
 
+* Course
+  Similar Institution
+  <code>bundle exec rake import:course</code>
+
 TO BE DOCUMENTED
 
 # License
