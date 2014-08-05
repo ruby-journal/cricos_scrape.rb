@@ -15,50 +15,52 @@ Support scrapping following entities:
 
 # Usage
   
-  There are some rake tasks that help import data. You can follow the directions below:
+There are some rake tasks that help import data. You can follow the directions below:
 
-* Import Institutions
+## Import Institutions
 
-  Following rake task will loop through the pages with provided IDs and will store the results in OUTPUT_DATA_FILE. You can find default ENVIRONMENT settings below:
+Following rake task will loop through the pages with provided IDs and will store the results in OUTPUT_DATA_FILE. You can find default ENVIRONMENT settings below:
 
-  ## Default ENVIRONMENT
 
-  <code>
-  MIN_ID = 1
-  MAX_ID = 10000
-  OUTPUT_DATA_FILE = institutions.json
-  OUTPUT_ID_FILE = institution_ids.json
-  </code>
+```
+bundle exec rake import:institutions # MIN_ID=1, MAX_ID=10000
+```
 
-  All files will be saved in folder "data". Only input file name in OUTPUT_DATA_FILE and OUTPUT_ID_FILE
+```
+bundle exec rake import:institutions MIN_ID=1 MAX_ID=10000
+```
 
-  Alternatively, you can specify a file with a list of IDs instead of looping through ID via FILE_INPUT.
+```
+Default ENVIRONMENT
 
-  Content FILE_INPUT should have the following form
-  <code>ID1,ID2,ID3</code>
+MIN_ID = 1
+MAX_ID = 10000
+OUTPUT_DATA_FILE = institutions.json
+OUTPUT_ID_FILE = institution_ids.json
+```
 
-  ## Syntax
+The `OUTPUT_DATA_FILE` and `OUTPUT_ID_FILE` will be saved in folder "data".
 
-  Get Institution with default agrument (MIN_ID=1, MAX_ID=10000)
-  <code>bundle exec rake import:institutions</code>
+Store data to specify file
 
-  Get Institution with specify agrument
-  <code>bundle exec rake import:institutions MIN_ID=1 MAX_ID=10000</code>
+```
+bundle exec rake import:institutions OUTPUT_DATA_FILE=<file_name> OUTPUT_ID_FILE=<file_name>
+```
 
-  Get Institution with file id list
-  <code>bundle exec rake import:institutions FILE_INPUT=<path></code>
+Alternatively to looping through IDs, you can specify a file with a list of IDs in `FILE_INPUT`.
 
-  Store data to specify file
-  <code>bundle exec rake import:institutions OUTPUT_DATA_FILE=<file_name> OUTPUT_ID_FILE=<file_name></code>
+Content `FILE_INPUT` should have the following form `ID1,ID2,ID3`
 
-  Combining ENVIRONMENT
-  <code>bundle exec rake import:institutions MIN_ID=1 MAX_ID=10000 OUTPUT_DATA_FILE=<file_name> OUTPUT_ID_FILE=<file_name></code>
+```
+bundle exec rake import:institutions FILE_INPUT=<path>
+```
 
-* Import Courses 
+
+## Import Courses 
   Courses have similar syntax with Institutions.
   <code>bundle exec rake import:courses</code>
 
-* Import Contacts
+## Import Contacts
 
   Following rake task will find all contacts and will store the results into OUTPUT_FILE
 
@@ -73,7 +75,6 @@ Support scrapping following entities:
   Store data to specify file
   <code>bundle exec rake import:contacts OUTPUT_FILE=<file_name></code>
 
-TO BE DOCUMENTED
 
 # License
 
