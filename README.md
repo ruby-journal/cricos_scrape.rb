@@ -14,6 +14,8 @@ Support scrapping following entities:
 * Contact
 
 # Usage
+  
+  There are some rakes in different classes, and they help better importing data. You can follow the directions below:
 
 * Institution
   Get Institution with default agrument (MIN_ID=1, MAX_ID=10000)
