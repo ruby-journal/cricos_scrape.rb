@@ -19,7 +19,7 @@ There are some rake tasks that help import data. You can follow the directions b
 
 ## Import Institutions
 
-Following rake task will loop through the pages with provided IDs and will store the results in OUTPUT_DATA_FILE. You can find default ENVIRONMENT settings below:
+Following rake task will loop through the pages with provided IDs and will store the results in `OUTPUT_DATA_FILE`. You can find default `ENVIRONMENT` settings below:
 
 
 ```
