@@ -15,11 +15,11 @@ Support scrapping following entities:
 
 # Usage
   
-  There are some rakes in different classes, and they help better importing data. You can follow the directions below:
+  There are some rake tasks that help import data. You can follow the directions below:
 
-* Import Institution
+* Import Institutions
 
-  Following rake task will loop through the pages with provided IDs and will stored the results into somefile defined with default ENVIRONMENT
+  Following rake task will loop through the pages with provided IDs and will store the results in OUTPUT_DATA_FILE. You can find default ENVIRONMENT settings below:
 
   ## Default ENVIRONMENT
 
@@ -30,7 +30,9 @@ Support scrapping following entities:
   OUTPUT_ID_FILE = institution_ids.json
   </code>
 
-  If you enter FILE_INPUT. Rake task will ignore MIN_ID and MAX_ID. Import ID will be taken from FILE_INPUT content.
+  All files will be saved in folder "data". Only input file name in OUTPUT_DATA_FILE and OUTPUT_ID_FILE
+
+  Alternatively, you can specify a file with a list of IDs instead of looping through ID via FILE_INPUT.
 
   Content FILE_INPUT should have the following form
   <code>ID1,ID2,ID3</code>
@@ -52,23 +54,21 @@ Support scrapping following entities:
   Combining ENVIRONMENT
   <code>bundle exec rake import:institutions MIN_ID=1 MAX_ID=10000 OUTPUT_DATA_FILE=<file_name> OUTPUT_ID_FILE=<file_name></code>
 
-* Course
-  Similar Institution but with different keyword
+* Import Courses 
+  Courses have similar syntax with Institutions.
   <code>bundle exec rake import:courses</code>
 
-* Contact
+* Import Contacts
 
-  Following rake task will find all contacts and will stored the results into somefile defined by ENVIRONMENT OUTPUT_FILE
+  Following rake task will find all contacts and will store the results into OUTPUT_FILE
 
   <code>OUTPUT_FILE = contacts.json</code>
 
   If enter OVERWRITE = true. This rake will overwrite old contacts in OUTPUT_FILE with new contacts
-
+  <code>bundle exec rake import:contacts OVERWRITE=true</code>
+  
   To get all contacts
   <code>bundle exec rake import:contacts</code>
-
-  To get all contacts and overwrite old data
-  <code>bundle exec rake import:contacts OVERWRITE=true</code>
 
   Store data to specify file
   <code>bundle exec rake import:contacts OUTPUT_FILE=<file_name></code>
