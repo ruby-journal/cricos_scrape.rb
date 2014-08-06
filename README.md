@@ -57,24 +57,34 @@ bundle exec rake import:institutions FILE_INPUT=<path>
 
 
 ## Import Courses 
-  Courses have similar syntax with Institutions.
-  <code>bundle exec rake import:courses</code>
+
+Courses have similar syntax with Institutions.
+```
+bundle exec rake import:courses
+```
 
 ## Import Contacts
 
-  Following rake task will find all contacts and will store the results into OUTPUT_FILE
+Following rake task will find all contacts and will store the results into `OUTPUT_FILE`
 
-  <code>OUTPUT_FILE = contacts.json</code>
+```
+OUTPUT_FILE = contacts.json
+```
 
-  If enter OVERWRITE = true. This rake will overwrite old contacts in OUTPUT_FILE with new contacts
-  <code>bundle exec rake import:contacts OVERWRITE=true</code>
-  
-  To get all contacts
-  <code>bundle exec rake import:contacts</code>
+If enter `OVERWRITE = true`. This rake will overwrite old contacts in `OUTPUT_FILE` with new contacts
+```
+bundle exec rake import:contacts OVERWRITE=true
+```
 
-  Store data to specify file
-  <code>bundle exec rake import:contacts OUTPUT_FILE=<file_name></code>
+To get all contacts
+```
+bundle exec rake import:contacts
+```
 
+Store data to specify file
+```
+bundle exec rake import:contacts OUTPUT_FILE=<file_name>
+```
 
 # License
 
