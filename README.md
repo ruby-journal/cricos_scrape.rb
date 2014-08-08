@@ -88,6 +88,4 @@ bundle exec rake import:contacts OUTPUT_FILE=<file_name>
 
 # License
 
-GPLv2 for non-commercial.
-
-For commercial app, please contact me in person for licensing quote.
+MIT
