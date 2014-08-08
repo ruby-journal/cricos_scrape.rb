@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/ruby-journal/cricos_scrape.rb'
   spec.license       = 'MIT'
 
-  spec.files         = FileList['[A-Z]*',
+  spec.files         = Dir['[A-Z]*',
                         'lib/*.rb',
                         'lib/cricos_scrape/*.rb',
                         'spec/*.rb',
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.6'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rspec-its'
+  spec.add_development_dependency 'rspec-its', '~> 1.0'
 
-  spec.add_runtime_dependency 'mechanize'
+  spec.add_runtime_dependency 'mechanize', '~> 2.7'
 end
