@@ -3,10 +3,10 @@ require_relative 'lib/cricos_scrape/version'
 Gem::Specification.new do |spec|
   spec.name          = 'cricos_scrape'
   spec.version       = CricosScrape::VERSION
-  spec.authors       = ['Toàn Lê']
-  spec.email         = ['ktoanlba@gmail.com']
+  spec.authors       = ['Trung Lê', 'Toàn Lê']
+  spec.email         = ['trung.le@ruby-journal.com', 'ktoanlba@gmail.com']
   spec.summary       = %q{Cricos Scrape}
-  spec.description   = %q{Scrape Institutions, Courses, Contacts from CRIOS}
+  spec.description   = %q{Scrape Institutions, Courses, Contacts from CRICOS}
   spec.homepage      = 'https://github.com/ruby-journal/cricos_scrape.rb'
   spec.license       = 'MIT'
 
