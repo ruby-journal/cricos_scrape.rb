@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/ruby-journal/cricos_scrape.rb.svg?branch=master)](https://travis-ci.org/ruby-journal/cricos_scrape.rb)
+
+
 # CRICOS Scraper
 
 ![CRICOS Logo](http://cricos.deewr.gov.au/images/cricos.gif)
