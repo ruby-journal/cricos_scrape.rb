@@ -57,4 +57,4 @@ DEPENDENCIES
   cricos_scrape!
   rake (~> 10.0)
   rspec (~> 3.0)
-  rspec-its
+  rspec-its (~> 1.0)
