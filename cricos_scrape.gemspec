@@ -1,4 +1,4 @@
-require_relative 'lib/cricos_scrape/version'
+require './lib/cricos_scrape/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'cricos_scrape'
