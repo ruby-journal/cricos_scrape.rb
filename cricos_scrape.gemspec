@@ -1,4 +1,4 @@
-require_relative 'lib/cricos_scrape/version'
+require './lib/cricos_scrape/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'cricos_scrape'
@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-its', '~> 1.0'
 
   spec.add_runtime_dependency 'mechanize', '~> 2.7'
+
+  spec.required_ruby_version = '>= 2.0'
 end
