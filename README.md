@@ -86,6 +86,13 @@ Store data to specify file
 bundle exec rake import:contacts OUTPUT_FILE=<file_name>
 ```
 
+# Testing
+  
+The tests are in the spec directory. Here syntax to test this gem.
+```
+bundle exec rake spec
+```
+
 # License
 
 MIT
