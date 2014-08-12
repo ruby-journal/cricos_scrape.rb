@@ -8,6 +8,8 @@
 CRICOS lacks API for data retrieval (so are many government-based services). This gem
 helps scrape data from [cricos.deewr.gov.au](http://cricos.deewr.gov.au/).
 
+This gem supports Ruby 2+ only.
+
 # Features
 
 Support scrapping following entities:
