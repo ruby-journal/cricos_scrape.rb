@@ -83,6 +83,14 @@ describe CricosScrape::InstitutionImporter do
       end
     end
 
+    context 'when the response body not contains location details' do
+      let(:uri) { institution_details_without_locations_details_uri }
+      
+      its(:locations) do
+        is_expected.to eq nil
+      end
+    end
+
     context 'when the response body contains pagination location' do
       let(:uri) { institution_details_with_pagination_location_page_1_uri }
 
