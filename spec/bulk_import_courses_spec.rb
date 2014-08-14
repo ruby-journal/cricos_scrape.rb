@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe BulkImportCourses do
+describe CricosScrape::BulkImportCourses do
 
   describe '#perform' do
     let(:output_file) { {'data' => 'spec_courses.json', 'ids' => 'spec_course_ids.json'} }
-    subject(:importer) { BulkImportCourses.new(output_file, min_id, max_id, input) }
+    subject(:importer) { CricosScrape::BulkImportCourses.new(output_file, min_id, max_id, input) }
     
     before do
       FileUtils.rm_rf(Dir[data_file_path("spec_*")])
-      allow_any_instance_of(CricosScrape::CourseImporter).to receive(:scrape_course).and_return(Course.new(3), Course.new(4))
+      allow_any_instance_of(CricosScrape::CourseImporter).to receive(:scrape_course).and_return(CricosScrape::Course.new(3), CricosScrape::Course.new(4))
     end
 
     context 'when no input file provided' do
       let(:min_id) { 3 }
       let(:max_id) { 4 }
       let(:input) { nil }
-      let(:course_data_result) { [Course.new(3), Course.new(4)].to_json }
+      let(:course_data_result) { [CricosScrape::Course.new(3), CricosScrape::Course.new(4)].to_json }
       let(:course_ids_result) { [3, 4].to_json }
 
       context 'given course exists' do
@@ -36,7 +36,7 @@ describe BulkImportCourses do
         end
 
         context 'when failed to save data' do
-          before { allow_any_instance_of(JsonFileStore).to receive(:save).and_raise() }
+          before { allow_any_instance_of(CricosScrape::JsonFileStore).to receive(:save).and_raise() }
           let!(:output) { capture_stdout { importer.perform } }
 
           it 'outputs error message' do

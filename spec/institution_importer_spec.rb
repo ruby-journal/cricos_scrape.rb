@@ -32,7 +32,7 @@ describe CricosScrape::InstitutionImporter do
       its(:total_capacity) { is_expected.to eq 50 }
       its(:website) { is_expected.to eq 'www.acu.edu.au' }
       its(:postal_address) do
-        is_expected.to eq Address.new('International Education Office', 'PO Box 968', 'NORTH SYDNEY', 'New South Wales', '2059')
+        is_expected.to eq CricosScrape::Address.new('International Education Office', 'PO Box 968', 'NORTH SYDNEY', 'New South Wales', '2059')
       end
     end
 
@@ -46,7 +46,7 @@ describe CricosScrape::InstitutionImporter do
       its(:total_capacity) { is_expected.to eq 500 }
       its(:website) { is_expected.to be_nil }
       its(:postal_address) do
-        is_expected.to eq Address.new('GPO Box 4821', nil, 'DARWIN', 'Northern Territory', '0801')
+        is_expected.to eq CricosScrape::Address.new('GPO Box 4821', nil, 'DARWIN', 'Northern Territory', '0801')
       end
     end
 
@@ -55,8 +55,8 @@ describe CricosScrape::InstitutionImporter do
 
       its(:contact_officers) do
         data = [
-          ContactOfficer.new('Principal Executive Officer', 'Matthew Green', 'Principal', '0889506400', '0889524607', nil),
-          ContactOfficer.new('International Student Contact', 'ROCHELLE Marshall', 'Secretary', '0889506400', '0889524607', 'rochelle.marshall@nt.catholic.edu.au')
+          CricosScrape::ContactOfficer.new('Principal Executive Officer', 'Matthew Green', 'Principal', '0889506400', '0889524607', nil),
+          CricosScrape::ContactOfficer.new('International Student Contact', 'ROCHELLE Marshall', 'Secretary', '0889506400', '0889524607', 'rochelle.marshall@nt.catholic.edu.au')
         ]
         is_expected.to eq data
       end
@@ -66,7 +66,7 @@ describe CricosScrape::InstitutionImporter do
       let(:uri) { institution_details_with_po_box_postal_address_uri }
 
       its(:contact_officers) do
-        is_expected.to eq [ContactOfficer.new('Principal Executive Officer', 'Rachael Shanahan', 'Director, Education Services', '0889011336', '0889995788', nil)]
+        is_expected.to eq [CricosScrape::ContactOfficer.new('Principal Executive Officer', 'Rachael Shanahan', 'Director, Education Services', '0889011336', '0889995788', nil)]
       end
     end
 
@@ -75,9 +75,9 @@ describe CricosScrape::InstitutionImporter do
       
       its(:locations) do
         locations = [
-          Location.new("456", 'Bath Street Campus', 'NT', '1'),
-          Location.new("456", 'Sadadeen Campus', 'NT', '2'),
-          Location.new("456", 'Traeger Campus', 'NT', '2') ,
+          CricosScrape::Location.new("456", 'Bath Street Campus', 'NT', '1'),
+          CricosScrape::Location.new("456", 'Sadadeen Campus', 'NT', '2'),
+          CricosScrape::Location.new("456", 'Traeger Campus', 'NT', '2') ,
         ]
         is_expected.to eq locations
       end
@@ -95,20 +95,20 @@ describe CricosScrape::InstitutionImporter do
       its(:locations) do
         locations = [
           #Locations on page 1
-          Location.new("456", "Albury", "NSW", "51"),
-          Location.new("456", "Bathurst", "NSW", "60"),
-          Location.new("456", "Canberra Institute of Technology - City Campus", "ACT", "2"),
-          Location.new("456", "CSU Study Centre Melbourne", "VIC", "22"),
-          Location.new("456", "CSU Study Centre Sydney", "NSW", "21"),
-          Location.new("456", "Dubbo", "NSW", "29"),
-          Location.new("456", "Holmesglen Institute of TAFE", "VIC", "3"),
-          Location.new("456", "Orange", "NSW", "41"),
-          Location.new("456", "Ryde", "NSW", "1"),
-          Location.new("456", "St Marks Theological Centre", "ACT", "12"),
+          CricosScrape::Location.new("456", "Albury", "NSW", "51"),
+          CricosScrape::Location.new("456", "Bathurst", "NSW", "60"),
+          CricosScrape::Location.new("456", "Canberra Institute of Technology - City Campus", "ACT", "2"),
+          CricosScrape::Location.new("456", "CSU Study Centre Melbourne", "VIC", "22"),
+          CricosScrape::Location.new("456", "CSU Study Centre Sydney", "NSW", "21"),
+          CricosScrape::Location.new("456", "Dubbo", "NSW", "29"),
+          CricosScrape::Location.new("456", "Holmesglen Institute of TAFE", "VIC", "3"),
+          CricosScrape::Location.new("456", "Orange", "NSW", "41"),
+          CricosScrape::Location.new("456", "Ryde", "NSW", "1"),
+          CricosScrape::Location.new("456", "St Marks Theological Centre", "ACT", "12"),
 
           #Locations on page 2
-          Location.new("456", "United Theological College", "NSW", "11"),
-          Location.new("456", "Wagga Wagga", "NSW", "105"),
+          CricosScrape::Location.new("456", "United Theological College", "NSW", "11"),
+          CricosScrape::Location.new("456", "Wagga Wagga", "NSW", "105"),
         ]
         is_expected.to eq locations
       end
@@ -116,9 +116,9 @@ describe CricosScrape::InstitutionImporter do
       context 'when the contact officers contains table grid' do
         its(:contact_officers) do
           data = [
-            ContactOfficer.new('Principal Executive Officer', 'Andrew Vann', 'Vice-Chancellor', '02 6338 4209', '02 6338 4809', nil),
-            ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 63657537', '02 63657590', 'mevans@csu.edu.au'),
-            ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 6365 7537', '02 6365 7590', 'mevans@csu.edu.au')
+            CricosScrape::ContactOfficer.new('Principal Executive Officer', 'Andrew Vann', 'Vice-Chancellor', '02 6338 4209', '02 6338 4809', nil),
+            CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 63657537', '02 63657590', 'mevans@csu.edu.au'),
+            CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 6365 7537', '02 6365 7590', 'mevans@csu.edu.au')
           ]
           is_expected.to eq data
         end

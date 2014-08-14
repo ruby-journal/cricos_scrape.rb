@@ -42,8 +42,8 @@ describe CricosScrape::CourseImporter do
       its(:total_cost) { is_expected.to eq '66,500' }
       its(:contact_officers) do
         contact_officers = [
-          ContactOfficer.new('Principal Executive Officer', 'Nicole King', 'Manager', '0262056998', '62059239', nil),
-          ContactOfficer.new('International Student Contact', 'PAUL Wang', 'Study Tour Coordinator', '62077293', '', 'paul.wang@act.gov.au'),
+          CricosScrape::ContactOfficer.new('Principal Executive Officer', 'Nicole King', 'Manager', '0262056998', '62059239', nil),
+          CricosScrape::ContactOfficer.new('International Student Contact', 'PAUL Wang', 'Study Tour Coordinator', '62077293', '', 'paul.wang@act.gov.au'),
         ]
         
         is_expected.to eq contact_officers

@@ -70,15 +70,3 @@ def capture_stdout(&block)
   end
   fake.string
 end
-
-JsonFileStore           = CricosScrape::JsonFileStore
-Address                 = CricosScrape::Address
-Institution             = CricosScrape::Institution
-Location                = CricosScrape::Location
-Course                  = CricosScrape::Course
-Contact                 = CricosScrape::Contact
-ContactOfficer          = CricosScrape::ContactOfficer
-
-BulkImportContacts      = CricosScrape::BulkImportContacts
-BulkImportCourses       = CricosScrape::BulkImportCourses
-BulkImportInstitutions  = CricosScrape::BulkImportInstitutions

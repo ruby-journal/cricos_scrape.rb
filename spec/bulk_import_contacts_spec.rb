@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe BulkImportContacts do
+describe CricosScrape::BulkImportContacts do
 
   describe '#perform' do
-    let(:contact) { Contact.new }
-    subject(:bulk_import_contacts) { BulkImportContacts.new('spec_contacts.json', overwrite) }
+    let(:contact) { CricosScrape::Contact.new }
+    subject(:bulk_import_contacts) { CricosScrape::BulkImportContacts.new('spec_contacts.json', overwrite) }
     
     before do
       FileUtils.rm_rf(Dir[data_file_path("spec_*")])
@@ -15,7 +15,7 @@ describe BulkImportContacts do
       let(:overwrite) { false }
 
       context 'when contacts data file is not exist ' do
-        before { allow_any_instance_of(JsonFileStore).to receive(:file_empty?).and_return(true) }
+        before { allow_any_instance_of(CricosScrape::JsonFileStore).to receive(:file_empty?).and_return(true) }
         let!(:output) { capture_stdout { bulk_import_contacts.perform } }
 
         it 'outputs success message' do
@@ -29,7 +29,7 @@ describe BulkImportContacts do
       end
 
       context 'when contacts data file exists' do
-        before { allow_any_instance_of(JsonFileStore).to receive(:file_empty?).and_return(false) }
+        before { allow_any_instance_of(CricosScrape::JsonFileStore).to receive(:file_empty?).and_return(false) }
         let!(:output) { capture_stdout { bulk_import_contacts.perform } }
 
         it 'outputs error message' do
@@ -42,7 +42,7 @@ describe BulkImportContacts do
       let(:overwrite) { true }
 
       context 'when contacts data file exists' do
-        before { allow_any_instance_of(JsonFileStore).to receive(:file_empty?).and_return(false) }
+        before { allow_any_instance_of(CricosScrape::JsonFileStore).to receive(:file_empty?).and_return(false) }
         let!(:output) { capture_stdout { bulk_import_contacts.perform } }
 
         it 'outputs success message' do
@@ -51,7 +51,7 @@ describe BulkImportContacts do
       end
 
       context 'failed to save data' do
-        before { allow_any_instance_of(JsonFileStore).to receive(:save).and_raise() }
+        before { allow_any_instance_of(CricosScrape::JsonFileStore).to receive(:save).and_raise() }
         let!(:output) { capture_stdout { bulk_import_contacts.perform } }
 
         it 'outputs error message' do
