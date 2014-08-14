@@ -26,7 +26,7 @@ module CricosScrape
           for i in (start_contact_row..end_contact_row).step(number_of_rows_per_contact)
             @row_index = i
 
-            contact = Contact.new
+            contact = CricosScrape::Contact.new
             contact.type_of_course = find_type_of_course
             contact.name = find_name
             contact.organisation = find_organisation
@@ -71,7 +71,7 @@ module CricosScrape
     end
 
     def find_postal_address
-      address = Address.new
+      address = CricosScrape::Address.new
 
       address_row = @table_contains_contact[@row_index+8].children
       postal_address_cell = address_row[3].children

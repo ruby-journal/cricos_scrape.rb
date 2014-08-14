@@ -15,7 +15,7 @@ module CricosScrape
 
       return if course_not_found?
 
-      course = Course.new
+      course = CricosScrape::Course.new
       course.course_id  = course_id
       course.course_name = find_course_name
       course.course_code = find_course_code
