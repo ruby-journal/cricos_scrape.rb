@@ -15,7 +15,7 @@ module CricosScrape
 
       return if institution_not_found?
 
-      institution = Institution.new
+      institution = CricosScrape::Institution.new
       institution.provider_code    = find_provider_code
       institution.trading_name     = find_trading_name
       institution.name             = find_name
@@ -90,7 +90,7 @@ module CricosScrape
     #   CANBERRA
     #   Australian Capital Territory  2601
     def find_postal_address
-      address = Address.new
+      address = CricosScrape::Address.new
 
       address_lines = @page.at('#institutionDetails_lblInstitutionPostalAddress').children.select { |node| node.is_a?(Nokogiri::XML::Text) }.map { |node| find_value_of_field(node) }
 
@@ -190,7 +190,7 @@ module CricosScrape
       for i in start_location_row..end_location_row
         location_row = location_list[i].children
 
-        location_obj = Location.new
+        location_obj = CricosScrape::Location.new
         location_obj.location_id = get_location_id(i)
         location_obj.name = find_value_of_field(location_row[1])
         location_obj.state = find_value_of_field(location_row[2])

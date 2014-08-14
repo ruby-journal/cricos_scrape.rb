@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe BulkImportInstitutions do
+describe CricosScrape::BulkImportInstitutions do
 
   describe '#perform' do
     let(:output_file) { {'data' => 'spec_institutions.json', 'ids' => 'spec_institution_ids.json'} }
-    subject(:importer) { BulkImportInstitutions.new(output_file, min_id, max_id, input) }
+    subject(:importer) { CricosScrape::BulkImportInstitutions.new(output_file, min_id, max_id, input) }
     
     before do
       FileUtils.rm_rf(Dir[data_file_path("spec_*")])
-      allow_any_instance_of(CricosScrape::InstitutionImporter).to receive(:scrape_institution).and_return(Institution.new(3), Institution.new(4))
+      allow_any_instance_of(CricosScrape::InstitutionImporter).to receive(:scrape_institution).and_return(CricosScrape::Institution.new(3), CricosScrape::Institution.new(4))
     end
 
     context 'when no input file provided' do
       let(:min_id) { 3 }
       let(:max_id) { 4 }
       let(:input) { nil }
-      let(:institution_data_result) { [Institution.new(3), Institution.new(4)].to_json }
+      let(:institution_data_result) { [CricosScrape::Institution.new(3), CricosScrape::Institution.new(4)].to_json }
       let(:institution_ids_result) { [3, 4].to_json }
 
       context 'when institution exists' do
@@ -36,7 +36,7 @@ describe BulkImportInstitutions do
         end
 
         context 'failed to save data' do
-          before { allow_any_instance_of(JsonFileStore).to receive(:save).and_raise() }
+          before { allow_any_instance_of(CricosScrape::JsonFileStore).to receive(:save).and_raise() }
           let!(:output) { capture_stdout { importer.perform } }
 
           it 'outputs error message' do

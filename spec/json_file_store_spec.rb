@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe JsonFileStore do
+describe CricosScrape::JsonFileStore do
 
   describe '#save' do
     let(:output) { 'spec_json_file_store.json' }
-    let(:institution1) { Institution.new(1) }
-    subject(:json_file) { JsonFileStore.new(output) }
+    let(:institution1) { CricosScrape::Institution.new(1) }
+    subject(:json_file) { CricosScrape::JsonFileStore.new(output) }
     
     context 'when save data to new file' do
       context 'when file doesnt exist' do
@@ -46,7 +46,7 @@ describe JsonFileStore do
 
     context 'when append data to exist file' do
       context 'when file has data' do
-        let(:institution2) { Institution.new(2) }
+        let(:institution2) { CricosScrape::Institution.new(2) }
         before do
           File.open(data_file_path(output), 'w') { |f| f.write([institution1].to_json) }
           json_file.save(institution2)
