@@ -11,7 +11,12 @@ module CricosScrape
     end
 
     def scrape_institution(provider_id)
-      @page = agent.get(url_for(provider_id))
+      begin
+       @page = agent.get(url_for(provider_id))
+      rescue Mechanize::ResponseCodeError
+        sleep 5
+        scrape_institution(provider_id)
+      end
 
       return if institution_not_found?
 
@@ -23,7 +28,7 @@ module CricosScrape
       institution.total_capacity   = find_total_capacity
       institution.website          = find_website
       institution.postal_address   = find_postal_address
-      institution.locations        = find_location
+      institution.locations        = find_location if location_found?
       institution.contact_officers = find_contact_officers
 
       institution
@@ -128,6 +133,10 @@ module CricosScrape
       find_value_of_field(@page.at('#pnlErrorMessage td:last')) == "The Provider ID entered is invalid - please try another."
     end
 
+    def location_found?
+      find_value_of_field(@page.at('#locationList_lblResultsSummary')) != "No locations were found for the selected institution."
+    end
+
     def find_location
       locations = []
 
@@ -165,14 +174,25 @@ module CricosScrape
       hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "Page$#{page_number}"
-      @page = hidden_form.submit(nil, {'action' => 'change-location-page'})
+      begin
+       @page = hidden_form.submit(nil, {'action' => 'change-location-page'})
+      rescue Mechanize::ResponseCodeError
+        sleep 5
+        jump_to_page(page_number)
+      end
     end
 
     def get_location_id(row_index)
       hidden_form = @page.form_with :id => "Form1"
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "click-#{row_index-3}"
-      course_page = hidden_form.submit(nil, {'action' => 'get-location-id'})
+
+      begin
+       course_page = hidden_form.submit(nil, {'action' => 'get-location-id'})
+      rescue Mechanize::ResponseCodeError
+        sleep 5
+        get_location_id(row_index)
+      end
 
       course_page.uri.to_s[/LocationID=([0-9]+)/, 1]
     end
