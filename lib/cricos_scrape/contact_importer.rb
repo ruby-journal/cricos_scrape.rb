@@ -8,7 +8,7 @@ module CricosScrape
     private :agent
 
     def initialize
-      @agent = Mechanize.new(user_agent_alias: 'Windows IE 9')
+      @agent = Mechanize.new
     end
 
     def scrape_contact
