@@ -8,6 +8,7 @@ module CricosScrape
 
     def initialize
       @agent = Mechanize.new
+      @agent.user_agent = Mechanize::AGENT_ALIASES['Windows IE 9']
     end
 
     def scrape_course(course_id)
