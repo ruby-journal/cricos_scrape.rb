@@ -14,7 +14,7 @@ namespace :import do
     max_id     = ENV['MAX_ID'] || 10000
     file_input = ENV['FILE_INPUT']
 
-    BulkImportInstitutions::new(file_output ,min_id, max_id, file_input).perform
+    CricosScrape::BulkImportInstitutions::new(file_output ,min_id, max_id, file_input).perform
   end
 
   task :courses do
@@ -27,12 +27,12 @@ namespace :import do
     max_id     = ENV['MAX_ID'] || 10000
     file_input = ENV['FILE_INPUT']
 
-    BulkImportCourses::new(file_output ,min_id, max_id, file_input).perform
+    CricosScrape::BulkImportCourses::new(file_output ,min_id, max_id, file_input).perform
   end
 
   task :contacts do
     output_file  = ENV['OUTPUT_FILE'] || 'contacts.json'
-    BulkImportContacts::new(output_file, ENV['OVERWRITE']).perform
+    CricosScrape::BulkImportContacts::new(output_file, ENV['OVERWRITE']).perform
   end
 
 end
