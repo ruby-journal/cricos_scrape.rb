@@ -44,8 +44,8 @@ OUTPUT_DATA_FILE = institutions.json
 OUTPUT_ID_FILE = institution_ids.json
 ```
 
-The `OUTPUT_DATA_FILE` and `OUTPUT_ID_FILE` will be saved in folder "data" if only enter `file_name`.
-Or we can use absolute path like `/root/file_name`
+If the `OUTPUT_DATA_FILE` and `OUTPUT_ID_FILE` have a value of file_name. Output results will be saved in folder "data".
+Else if we use absolute path like `/root/file_name`. Data will be saved into this path
 
 Store data to specify file
 ```
