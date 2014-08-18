@@ -40,7 +40,7 @@ module CricosScrape
     end
 
     def file_path
-      path = @file.include?('/') ? @file : "../../../data/#{@file}"
+      path = Pathname.new(@file).absolute? ? @file : "../../../data/#{@file}"
       File.expand_path(path, __FILE__)
     end
   end
