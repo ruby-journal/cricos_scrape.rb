@@ -25,6 +25,7 @@ describe CricosScrape::InstitutionImporter do
     context 'when the response body contains Institution Trading Name' do
       let(:uri) { institution_details_with_trading_name_uri }
 
+      its(:provider_id) { is_expected.to eq 1 }
       its(:provider_code) { is_expected.to eq '00873F' }
       its(:trading_name) { is_expected.to eq 'Australian Catholic University Limited' }
       its(:name) { is_expected.to eq 'Australian Catholic University Limited' }
@@ -39,6 +40,7 @@ describe CricosScrape::InstitutionImporter do
     context 'when the response body does not contains Address Line 2' do
       let(:uri) { institution_details_with_po_box_postal_address_uri }
 
+      its(:provider_id) { is_expected.to eq 1 }
       its(:provider_code) { is_expected.to eq '00780M' }
       its(:trading_name) { is_expected.to be_nil }
       its(:name) { is_expected.to eq 'Department of Education' }
