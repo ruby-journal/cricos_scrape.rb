@@ -12,29 +12,29 @@ module CricosScrape
     end
 
     def perform
-      @range.each do |providerID|
-        scrape_course_and_save_to_file(providerID)
+      @range.each do |courseID|
+        scrape_course_and_save_to_file(courseID)
       end
     end
 
     private
-    def scrape_course_and_save_to_file(providerID)
-      course = @importer.scrape_course(providerID)
+    def scrape_course_and_save_to_file(courseID)
+      course = @importer.scrape_course(courseID)
       if course
-        save_course_data_to_file(providerID, course)
+        save_course_data_to_file(courseID, course)
       else
-        puts "The Provider ID #{providerID} entered is invalid - please try another."
+        puts "The Course ID #{courseID} entered is invalid - please try another."
       end
     end
 
-    def save_course_data_to_file(providerID, course)
-      @course_ids_file.save(providerID)
+    def save_course_data_to_file(courseID, course)
+      @course_ids_file.save(courseID)
       @courses_file.save(course)
-      puts "Success with ProviderID #{providerID}"
+      puts "Success with CourseID #{courseID}"
     rescue => e
       @courses_file.rollback
       @course_ids_file.rollback
-      puts "Error writing to files with ProviderID #{providerID}"
+      puts "Error writing to files with CourseID #{courseID}"
     end
 
     def convert_ids_from_file_to_array(input)

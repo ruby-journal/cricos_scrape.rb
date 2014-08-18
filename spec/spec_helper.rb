@@ -36,6 +36,11 @@ def institution_details_without_locations_details_uri
   "file://#{file}"
 end
 
+def course_details_with_contact_officers_table_grid
+  file = File.expand_path("../fixtures/course_details_with_contact_officers_table_grid.html", __FILE__)
+  "file://#{file}"
+end
+
 def courses_list_by_location_id_uri
   file = File.expand_path("../fixtures/courses_list_by_location_id_uri.html", __FILE__)
   "file://#{file}"
