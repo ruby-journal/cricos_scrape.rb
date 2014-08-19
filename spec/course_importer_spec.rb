@@ -66,7 +66,6 @@ describe CricosScrape::CourseImporter do
         CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 6365 7537', '02 6365 7590', 'mevans@csu.edu.au')] }
         
       its(:contact_officers) do
-        data = 
         is_expected.to eq data
       end
     end
