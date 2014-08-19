@@ -23,7 +23,7 @@ describe CricosScrape::BulkImportCourses do
           let!(:output) { capture_stdout { importer.perform } }
 
           it 'outputs success message' do
-            expect(output).to include "Success with ProviderID"
+            expect(output).to include "Success with CourseID"
           end
 
           it 'stores courses data file' do
@@ -40,7 +40,7 @@ describe CricosScrape::BulkImportCourses do
           let!(:output) { capture_stdout { importer.perform } }
 
           it 'outputs error message' do
-            expect(output).to include "Error writing to files with ProviderID"
+            expect(output).to include "Error writing to files with CourseID"
           end
         end
       end

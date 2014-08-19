@@ -12,7 +12,12 @@ module CricosScrape
     end
 
     def scrape_course(course_id)
-      @page = agent.get(url_for(course_id))
+      begin
+        @page = agent.get(url_for(course_id))
+      rescue Mechanize::ResponseCodeError
+        sleep 5
+        scrape_course(course_id)
+      end
 
       return if course_not_found?
 
@@ -206,7 +211,7 @@ module CricosScrape
 
     def contains_contact_details_grid?
       contact_officer_area_css_id = @contact_officer_area.attributes['id'].text
-      @page.search("//*[@id='#{contact_officer_area_css_id}']/div/table[starts-with(@id, 'ctl00_cphDefaultPage_tabContainer_sheetContactDetail_contactDetails_grid')]").any?
+      @page.search("//*[@id='#{contact_officer_area_css_id}']/div/table[starts-with(@id, 'ctl00_cphDefaultPage_tabContainer_sheetContactDetail_contactDetail_grid')]").any?
     end
 
     #Get all locations of course
@@ -247,14 +252,24 @@ module CricosScrape
       hidden_form = @page.form_with :id => "aspnetForm"
       hidden_form['__EVENTTARGET'] = 'ctl00$cphDefaultPage$tabContainer$sheetCourseDetail$courseLocationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "Page$#{page_number}"
-      @page = hidden_form.submit(nil, {'action' => 'change-page'})
+      begin
+        @page = hidden_form.submit(nil, {'action' => 'change-page'})
+      rescue Mechanize::ResponseCodeError
+        sleep 5
+        scrape_course(course_id)
+      end
     end
 
     def get_location_id(row_index)
       hidden_form = @page.form_with :id => "aspnetForm"
       hidden_form['__EVENTTARGET'] = 'ctl00$cphDefaultPage$tabContainer$sheetCourseDetail$courseLocationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "click-#{row_index-3}"
-      course_page = hidden_form.submit(nil, {'action' => 'get-location-id'})
+      begin
+        course_page = hidden_form.submit(nil, {'action' => 'get-location-id'})
+      rescue Mechanize::ResponseCodeError
+        sleep 5
+        scrape_course(course_id)
+      end
 
       course_page.uri.to_s[/LocationID=([0-9]+)/, 1]
     end
