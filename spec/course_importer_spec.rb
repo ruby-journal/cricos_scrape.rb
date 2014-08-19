@@ -61,13 +61,12 @@ describe CricosScrape::CourseImporter do
 
     context 'when the contact officers contains table grid' do
       let(:uri) { course_details_with_contact_officers_table_grid }
-      
+      let(:data) { [CricosScrape::ContactOfficer.new('Principal Executive Officer', 'Andrew Vann', 'Vice-Chancellor', '02 6338 4209', '02 6338 4809', nil),
+        CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 63657537', '02 63657590', 'mevans@csu.edu.au'),
+        CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 6365 7537', '02 6365 7590', 'mevans@csu.edu.au')] }
+        
       its(:contact_officers) do
-        data = [
-          CricosScrape::ContactOfficer.new('Principal Executive Officer', 'Andrew Vann', 'Vice-Chancellor', '02 6338 4209', '02 6338 4809', nil),
-          CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 63657537', '02 63657590', 'mevans@csu.edu.au'),
-          CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 6365 7537', '02 6365 7590', 'mevans@csu.edu.au')
-        ]
+        data = 
         is_expected.to eq data
       end
     end
