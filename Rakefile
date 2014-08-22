@@ -7,7 +7,7 @@ namespace :import do
   task :institutions do
     file_output = {
       'data' => ENV['OUTPUT_DATA_FILE'] || 'institutions.json',
-      'ids' => ENV['OUTPUT_ID_FILE'] || 'institution_ids.json'
+      'id' => ENV['OUTPUT_ID_FILE'] || 'last_institution_id.json'
     }
 
     min_id     = ENV['MIN_ID'] || 1
