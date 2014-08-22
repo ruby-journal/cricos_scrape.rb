@@ -20,7 +20,7 @@ namespace :import do
   task :courses do
     file_output = {
       'data' => ENV['OUTPUT_DATA_FILE'] || 'courses.json',
-      'ids' => ENV['OUTPUT_ID_FILE'] || 'course_ids.json'
+      'id' => ENV['OUTPUT_ID_FILE'] || 'last_course_id.json'
     }
 
     min_id     = ENV['MIN_ID'] || 1

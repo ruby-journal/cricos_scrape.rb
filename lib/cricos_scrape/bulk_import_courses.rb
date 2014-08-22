@@ -8,7 +8,7 @@ module CricosScrape
 
       @importer = CricosScrape::CourseImporter.new
       @courses_file = CricosScrape::JsonFileStore.new(output['data'])
-      @course_ids_file = CricosScrape::JsonFileStore.new(output['ids'])
+      @last_course_id_file = CricosScrape::JsonFileStore.new(output['id'])
     end
 
     def perform
@@ -20,6 +20,8 @@ module CricosScrape
     private
     def scrape_course_and_save_to_file(courseID)
       course = @importer.scrape_course(courseID)
+      @last_course_id_file.save(courseID, true) rescue nil
+
       if course
         save_course_data_to_file(courseID, course)
       else
@@ -28,12 +30,9 @@ module CricosScrape
     end
 
     def save_course_data_to_file(courseID, course)
-      @course_ids_file.save(courseID)
       @courses_file.save(course)
       puts "Success with CourseID #{courseID}"
     rescue => e
-      @courses_file.rollback
-      @course_ids_file.rollback
       puts "Error writing to files with CourseID #{courseID}"
     end
 

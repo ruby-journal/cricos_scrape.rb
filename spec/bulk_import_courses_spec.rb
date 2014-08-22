@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CricosScrape::BulkImportCourses do
 
   describe '#perform' do
-    let(:output_file) { {'data' => 'spec_courses.json', 'ids' => 'spec_course_ids.json'} }
+    let(:output_file) { {'data' => 'spec_courses.json', 'id' => 'spec_last_course_id.json'} }
     subject(:importer) { CricosScrape::BulkImportCourses.new(output_file, min_id, max_id, input) }
     
     before do
@@ -16,7 +16,6 @@ describe CricosScrape::BulkImportCourses do
       let(:max_id) { 4 }
       let(:input) { nil }
       let(:course_data_result) { [CricosScrape::Course.new(3), CricosScrape::Course.new(4)].to_json }
-      let(:course_ids_result) { [3, 4].to_json }
 
       context 'given course exists' do
         context 'when successful data storage' do
@@ -30,8 +29,8 @@ describe CricosScrape::BulkImportCourses do
             expect(File.read(data_file_path(output_file['data']))).to eq course_data_result
           end
 
-          it 'stores course ids file' do
-            expect(File.read(data_file_path(output_file['ids']))).to eq course_ids_result
+          it 'stores last course id to file' do
+            expect(File.read(data_file_path(output_file['id']))).to eq [max_id].to_json
           end
         end
 
@@ -53,8 +52,8 @@ describe CricosScrape::BulkImportCourses do
           expect(File.exist?(data_file_path(output_file['data']))).to be false
         end
 
-        it 'does not store course ids to file' do
-          expect(File.exist?(data_file_path(output_file['ids']))).to be false
+        it 'stores last course id to file' do
+          expect(File.read(data_file_path(output_file['id']))).to eq [max_id].to_json
         end
 
         it 'outputs error message' do
@@ -67,17 +66,17 @@ describe CricosScrape::BulkImportCourses do
       let(:min_id) { nil }
       let(:max_id) { nil }
       let(:input) { 'data/tmp_input' }
-      let(:course_ids_result) { [1, 2, 3, 5].to_json }
+      let(:input_data) { [1, 2, 3, 5] }
 
       before do
-        File.open(input, 'w') {|f| f.write("1,2,3,5") }
+        File.open(input, 'w') {|f| f.write(input_data.join(',')) }
         #hide puts string on cli
         allow_any_instance_of(IO).to receive(:puts)
         importer.perform
       end
 
-      it 'stores course ids file' do
-        expect(File.read(data_file_path(output_file['ids']))).to eq course_ids_result
+      it 'stores last course id file' do
+        expect(File.read(data_file_path(output_file['id']))).to eq [input_data.last].to_json
       end
     end
   end
