@@ -13,17 +13,6 @@ module CricosScrape
       !File.exist?(file_path) || File.zero?(file_path)
     end
 
-    def rollback
-      unless file_empty?
-        data = JSON.parse(File.read(file_path))
-        if data.last.to_json == @entity.to_json
-          data.pop
-          @entity = data
-          save_data_to_new_file
-        end
-      end
-    end
-
     private
     def save_data_to_new_file
       data_string = @entity.is_a?(Array) ? @entity.to_json : "[#{@entity.to_json}]"
