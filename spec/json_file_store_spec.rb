@@ -55,14 +55,6 @@ describe CricosScrape::JsonFileStore do
         it 'appends data to file' do
           expect(File.read(data_file_path(output))).to eq [institution1, institution2].to_json
         end
-
-        context 'when rollback file' do
-          before { json_file.rollback }
-
-          it 'rollbacks old data' do
-            expect(File.read(data_file_path(output))).to eq [institution1].to_json
-          end
-        end
       end
     end
   end
