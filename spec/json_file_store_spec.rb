@@ -20,7 +20,7 @@ describe CricosScrape::JsonFileStore do
           end
 
           it 'stores data' do
-            expect(File.read(data_file_path(output))).to eq "[#{entity.map{|c| c.to_json }.join(',')}]"
+            expect(File.read(data_file_path(output))).to eq "[#{entity.map(&:to_json).join(',')}]"
           end
         end
 
