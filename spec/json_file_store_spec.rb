@@ -18,6 +18,10 @@ describe CricosScrape::JsonFileStore do
           it 'creates new data file' do
             expect(File.exist?(data_file_path(output))).to be true
           end
+
+          it 'stores data' do
+            expect(File.read(data_file_path(output))).to eq "[#{entity.map{|c| c.to_json }.join(',')}]"
+          end
         end
 
         context 'when entity is struct' do
@@ -26,6 +30,10 @@ describe CricosScrape::JsonFileStore do
 
           it 'creates new data file' do
             expect(File.exist?(data_file_path(output))).to be true
+          end
+
+          it 'stores data' do
+            expect(File.read(data_file_path(output))).to eq "[#{entity.to_json}]"
           end
         end
       end
