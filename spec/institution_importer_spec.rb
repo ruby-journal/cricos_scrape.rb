@@ -33,7 +33,7 @@ describe CricosScrape::InstitutionImporter do
       its(:total_capacity) { is_expected.to eq 50 }
       its(:website) { is_expected.to eq 'www.acu.edu.au' }
       its(:postal_address) do
-        is_expected.to eq CricosScrape::Address.new('International Education Office', 'PO Box 968', 'NORTH SYDNEY', 'New South Wales', '2059')
+        is_expected.to eq "International Education Office\nPO Box 968\nNORTH SYDNEY\nNew South Wales  2059"
       end
     end
 
@@ -48,7 +48,7 @@ describe CricosScrape::InstitutionImporter do
       its(:total_capacity) { is_expected.to eq 500 }
       its(:website) { is_expected.to be_nil }
       its(:postal_address) do
-        is_expected.to eq CricosScrape::Address.new('GPO Box 4821', nil, 'DARWIN', 'Northern Territory', '0801')
+        is_expected.to eq "GPO Box 4821\nDARWIN\nNorthern Territory  0801"
       end
     end
 

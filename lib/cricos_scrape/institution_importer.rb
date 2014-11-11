@@ -83,50 +83,12 @@ module CricosScrape
       find_value_of_field(field)
     end
 
-    # Extract address details from text fields
-    # Returned text conforms following format:
-    #
-    # ADDRESS LINE 1
-    # ADDRESS LINE 2 (optional)
-    # SUBURB
-    # STATE  POSTCODE
-    #
-    # eg:
-    #   International Office
-    #   Box 826
-    #   CANBERRA
-    #   Australian Capital Territory  2601
     def find_postal_address
       address = CricosScrape::Address.new
 
       address_lines = @page.at('#institutionDetails_lblInstitutionPostalAddress').children.select { |node| node.is_a?(Nokogiri::XML::Text) }.map { |node| find_value_of_field(node) }
 
-      case address_lines.count
-      when 4
-        address.address_line_1 = address_lines[0]
-        address.address_line_2 = address_lines[1]
-        address.suburb         = address_lines[2]
-      when 3
-        address.address_line_1 = address_lines[0]
-        address.suburb         = address_lines[1]
-      end
-
-      # last line is always state and postcode
-      address.state, address.postcode = extract_state_and_postcode_from(address_lines.last)
-
-      address
-    end
-
-    def extract_state_and_postcode_from(line)
-      line.scan(/^(#{australia_states_regex}).*(#{australia_postcode_regex})$/).first
-    end
-
-    def australia_states_regex
-      'New South Wales|Queensland|South Autralia|Victoria|Australian Capital Territory|Northern Territory|Western Australia|Tasmania'
-    end
-
-    def australia_postcode_regex
-      '\d{4}'
+      address_lines.join("\n")
     end
 
     # there is no record not found page
