@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.version       = CricosScrape::VERSION
   spec.authors       = ['Trung Lê', 'Toàn Lê']
   spec.email         = ['trung.le@ruby-journal.com', 'ktoanlba@gmail.com']
-  spec.summary       = %q{Cricos Scrape}
+  spec.summary       = %q{CRICOS Scrape}
   spec.description   = %q{Scrape Institutions, Courses, Contacts from CRICOS}
   spec.homepage      = 'https://github.com/ruby-journal/cricos_scrape.rb'
   spec.license       = 'MIT'
