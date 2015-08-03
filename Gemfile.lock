@@ -2,30 +2,30 @@ PATH
   remote: .
   specs:
     cricos_scrape (1.0)
-      mechanize (= 2.7.2)
+      mechanize (>= 2.7.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
-    domain_name (0.5.22)
+    domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    mechanize (2.7.2)
+    mechanize (2.7.3)
       domain_name (~> 0.5, >= 0.5.1)
-      http-cookie (~> 1.0.0)
-      mime-types (~> 1.17, >= 1.17.2)
+      http-cookie (~> 1.0)
+      mime-types (~> 2.0)
       net-http-digest_auth (~> 1.1, >= 1.1.1)
       net-http-persistent (~> 2.5, >= 2.5.2)
       nokogiri (~> 1.4)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
-    mime-types (1.25.1)
-    mini_portile (0.6.1)
+    mime-types (2.6.1)
+    mini_portile (0.6.2)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
-    nokogiri (1.6.4.1)
+    nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     ntlm-http (0.1.1)
     rake (10.3.2)
@@ -46,15 +46,18 @@ GEM
     rspec-support (3.1.2)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.6)
+    unf_ext (0.0.7.1)
     webrobots (0.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.6)
+  bundler
   cricos_scrape!
-  rake (~> 10.0)
-  rspec (~> 3.0)
-  rspec-its (~> 1.0)
+  rake
+  rspec
+  rspec-its
+
+BUNDLED WITH
+   1.10.6
