@@ -1,7 +1,7 @@
 module CricosScrape
   class InstitutionImporter
 
-    INSTITUTION_URL = 'http://cricos.deewr.gov.au/Institution/InstitutionDetailsOnePage.aspx'
+    INSTITUTION_URL = 'http://cricos.education.gov.au/Institution/InstitutionDetailsOnePage.aspx'
 
     attr_reader :agent
     private :agent

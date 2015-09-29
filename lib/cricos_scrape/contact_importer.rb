@@ -1,9 +1,9 @@
 module CricosScrape
   class ContactImporter
 
-    CONTACT_URL = 'http://cricos.deewr.gov.au/Contacts/CRICOSContacts.aspx'
+    CONTACT_URL = 'http://cricos.education.gov.au/Contacts/CRICOSContacts.aspx'
     STATES_CODE = ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA']
-
+        
     attr_reader :agent
     private :agent
 

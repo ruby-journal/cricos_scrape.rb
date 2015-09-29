@@ -1,7 +1,7 @@
 module CricosScrape
   class CourseImporter
 
-    COURSE_URL = 'http://cricos.deewr.gov.au/Course/CourseDetails.aspx'
+    COURSE_URL = 'http://cricos.education.gov.au/Course/CourseDetails.aspx'
 
     attr_reader :agent
     private :agent
