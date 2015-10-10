@@ -84,11 +84,12 @@ module CricosScrape
     end
 
     def find_postal_address
-      address = CricosScrape::Address.new
+      post_address_node = @page.at('#institutionDetails_lblInstitutionPostalAddress')
 
-      address_lines = @page.at('#institutionDetails_lblInstitutionPostalAddress').children.select { |node| node.is_a?(Nokogiri::XML::Text) }.map { |node| find_value_of_field(node) }
-
-      address_lines.join("\n")
+      if post_address_node
+        address_lines = post_address_node.children.select { |node| node.is_a?(Nokogiri::XML::Text) }.map { |node| find_value_of_field(node) }
+        address_lines.join("\n")
+      end
     end
 
     # there is no record not found page
@@ -112,7 +113,7 @@ module CricosScrape
       else
         locations += fetch_locations_from_current_page
       end
-      
+
       locations
     end
 
@@ -194,7 +195,7 @@ module CricosScrape
       contact_officers_list.each do |contact_officer|
         @contact_officer_area = contact_officer
         @contact_officer_table = @contact_officer_area.at('table').children
-        
+
         if contains_contact_details_grid?
           contact_officers += find_contact_officer_grid
         else
