@@ -1,22 +1,24 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/cricos_scrape'
-require_relative '../lib/cricos_scrape/version'
+require 'cricos_scrape'
+require 'cricos_scrape/version'
 require 'commander/import'
 
 program :version, CricosScrape::VERSION.to_s
 program :description, 'Scrape data from CRICOS website'
 
 command :scrape do |c|
-  c.syntax = 'cricos_scrape scrape [institutions|courses] [min_id:1] [max_id:10000]'
+  c.syntax = 'cricos_scrape scrape [institutions|courses|contacts] [min_id:1] [max_id:10000]'
   c.summary = 'Scrape entities from CRICOS'
   c.description = c.summary
   c.example 'Import institutions', 'cricos_scrape scrape institutions'
   c.example 'Import institutions and persist to a file', 'cricos_scrape scrape institutions >> institutions.json'
   c.example 'Import institutions with specified ID range [1-200]', 'cricos_scrape scrape institutions 1 200'
   c.example 'Import courses', 'cricos_scrape scrape courses'
-  c.example 'Import courses and persist to a file', 'cricos_scrape scrape institutions >> courses.json'
+  c.example 'Import courses and persist to a file', 'cricos_scrape scrape courses >> courses.json'
   c.example 'Import courses with specified ID range [1-200]', 'cricos_scrape scrape courses 1 200'
+  c.example 'Import contacts', 'cricos_scrape scrape contacts. NOTE: ID range option does not apply'
+  c.example 'Import contacts and persist to a file', 'cricos_scrape scrape contacts >> contacts.json'
 
   c.action do |args, options|
     entity = args[0]
@@ -31,7 +33,7 @@ command :scrape do |c|
     when 'contacts'
       CricosScrape::ImportContacts.new.perform
     else
-      STDERR.puts "[ERROR] Invalid entity. Must be of [institutions|courses]"
+      STDERR.puts "[ERROR] Invalid entity. Please see `cricos_scrape scrape -h` for more details"
       exit 1
     end
   end

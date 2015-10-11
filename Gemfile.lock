@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cricos_scrape (2.0)
+    cricos_scrape (2.1)
       mechanize (~> 2.7, >= 2.7.2)
       slop (~> 4.2.0, >= 4.2.0)
 

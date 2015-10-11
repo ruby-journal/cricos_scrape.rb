@@ -1,5 +1,5 @@
-require_relative './importer/contact_importer'
-require_relative './agent'
+require 'cricos_scrape/importer/contact_importer'
+require 'cricos_scrape/agent'
 
 module CricosScrape
   class ImportContacts

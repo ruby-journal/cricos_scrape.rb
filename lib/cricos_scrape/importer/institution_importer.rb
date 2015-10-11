@@ -1,6 +1,6 @@
-require_relative '../entities/institution'
-require_relative '../entities/location'
-require_relative '../entities/contact_officer'
+require 'cricos_scrape/entities/institution'
+require 'cricos_scrape/entities/location'
+require 'cricos_scrape/entities/contact_officer'
 
 module CricosScrape
   class InstitutionImporter
@@ -173,10 +173,10 @@ module CricosScrape
         for i in start_location_row..end_location_row
           location_row = location_list[i].children
 
-          location_obj = Location.new
-          location_obj.location_id = get_location_id(i)
-          location_obj.name = find_value_of_field(location_row[1])
-          location_obj.state = find_value_of_field(location_row[2])
+          location_obj                   = Location.new
+          location_obj.location_id       = get_location_id(i)
+          location_obj.name              = find_value_of_field(location_row[1])
+          location_obj.state             = find_value_of_field(location_row[2])
           location_obj.number_of_courses = find_value_of_field(location_row[3])
 
           locations_of_page << location_obj
@@ -215,12 +215,12 @@ module CricosScrape
       for i in data_row_start..data_row_end
         contact_row = @contact_officer_table[i].children
 
-        contact = ContactOfficer.new
-        contact.role      = find_contact_officer_role
-        contact.name      = find_value_of_field(contact_row[1])
-        contact.phone     = find_value_of_field(contact_row[2])
-        contact.fax       = find_value_of_field(contact_row[3])
-        contact.email     = find_value_of_field(contact_row[4])
+        contact       = ContactOfficer.new
+        contact.role  = find_contact_officer_role
+        contact.name  = find_value_of_field(contact_row[1])
+        contact.phone = find_value_of_field(contact_row[2])
+        contact.fax   = find_value_of_field(contact_row[3])
+        contact.email = find_value_of_field(contact_row[4])
 
         contact_officers << contact
       end
@@ -229,13 +229,13 @@ module CricosScrape
     end
 
     def find_contact_officer
-      contact           = ContactOfficer.new
-      contact.role      = find_contact_officer_role
-      contact.name      = find_contact_officer_name
-      contact.title     = find_contact_officer_title
-      contact.phone     = find_contact_officer_phone
-      contact.fax       = find_contact_officer_fax
-      contact.email     = find_contact_officer_email
+      contact       = ContactOfficer.new
+      contact.role  = find_contact_officer_role
+      contact.name  = find_contact_officer_name
+      contact.title = find_contact_officer_title
+      contact.phone = find_contact_officer_phone
+      contact.fax   = find_contact_officer_fax
+      contact.email = find_contact_officer_email
 
       contact
     end

@@ -1,5 +1,5 @@
-require_relative '../entities/course'
-require_relative '../entities/contact_officer'
+require 'cricos_scrape/entities/course'
+require 'cricos_scrape/entities/contact_officer'
 
 module CricosScrape
   class CourseImporter
