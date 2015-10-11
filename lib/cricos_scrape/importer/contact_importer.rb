@@ -1,18 +1,17 @@
+require_relative '../entities/contact'
+require_relative '../entities/address'
+
 module CricosScrape
   class ContactImporter
 
-    CONTACT_URL = 'http://cricos.deewr.gov.au/Contacts/CRICOSContacts.aspx'
+    CONTACT_URL = 'http://cricos.education.gov.au/Contacts/CRICOSContacts.aspx'
     STATES_CODE = ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA']
 
-    attr_reader :agent
-    private :agent
-
-    def initialize
-      @agent = Mechanize.new
-      @agent.user_agent = Mechanize::AGENT_ALIASES['Windows IE 9']
+    def initialize(agent)
+      @agent = agent
     end
 
-    def scrape_contact
+    def run
       contacts = []
 
       for state in STATES_CODE
@@ -23,18 +22,18 @@ module CricosScrape
           number_of_rows_per_contact = 18
           start_contact_row = 3
           end_contact_row = @table_contains_contact.count - number_of_rows_per_contact
-          
+
           for i in (start_contact_row..end_contact_row).step(number_of_rows_per_contact)
             @row_index = i
 
-            contact = CricosScrape::Contact.new
+            contact                = Contact.new
             contact.type_of_course = find_type_of_course
-            contact.name = find_name
-            contact.organisation = find_organisation
+            contact.name           = find_name
+            contact.organisation   = find_organisation
             contact.postal_address = find_postal_address
-            contact.telephone = find_telephone
-            contact.facsimile = find_facsimile
-            contact.email = find_email
+            contact.telephone      = find_telephone
+            contact.facsimile      = find_facsimile
+            contact.email          = find_email
 
             contacts << contact
           end
@@ -45,6 +44,9 @@ module CricosScrape
     end
 
     private
+
+    attr_reader :agent, :page
+
     def url_for(state_code)
       "#{CONTACT_URL}?StateCode=#{state_code}"
     end
@@ -72,12 +74,18 @@ module CricosScrape
     end
 
     def find_postal_address
-      address = CricosScrape::Address.new
+      address = Address.new
 
       address_row = @table_contains_contact[@row_index+8].children
       postal_address_cell = address_row[3].children
-      address.address_line_1 = find_value_of_field(postal_address_cell[0])
-      address.suburb, address.state, address.postcode = extract_suburb_and_state_and_postcode_from(find_value_of_field(postal_address_cell[2]))
+
+      # delete <br>
+      lines = postal_address_cell - postal_address_cell.css('br')
+      address.address_line_1 = find_value_of_field(lines[0])
+
+      if line2 = find_value_of_field(lines[1])
+        address.suburb, address.state, address.postcode = extract_suburb_and_state_and_postcode_from(line2)
+      end
 
       address
     end

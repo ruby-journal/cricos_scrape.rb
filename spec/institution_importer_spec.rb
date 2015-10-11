@@ -2,15 +2,14 @@ require 'spec_helper'
 
 describe CricosScrape::InstitutionImporter do
 
-  describe '#scrape_institution' do
-    let(:agent) { CricosScrape::InstitutionImporter.new }
-    subject(:institution) { agent.scrape_institution(1) }
-    before do
-      allow(agent).to receive(:url_for).with(1).and_return(uri)
+  describe '#run' do
+    let(:agent) { CricosScrape.agent }
 
-      @fake_agent = Mechanize.new
-      
-      courses_list_page = @fake_agent.get(institution_details_with_pagination_location_page_1_uri+"?LocationID=456")
+    subject(:institution) { CricosScrape::InstitutionImporter.new(agent, provider_id: 1).run }
+
+    before do
+      allow_any_instance_of(CricosScrape::InstitutionImporter).to receive(:url).and_return(uri)
+      courses_list_page = agent.get(institution_details_with_pagination_location_page_1_uri+"?LocationID=456")
       allow_any_instance_of(Mechanize::Form).to receive(:submit).with(nil, {'action' => 'get-location-id'}).and_return(courses_list_page)
     end
 
@@ -74,7 +73,7 @@ describe CricosScrape::InstitutionImporter do
 
     context 'when the response body not contains pagination location' do
       let(:uri) { institution_details_without_pagination_location_uri }
-      
+
       its(:locations) do
         locations = [
           CricosScrape::Location.new("456", 'Bath Street Campus', 'NT', '1'),
@@ -87,7 +86,7 @@ describe CricosScrape::InstitutionImporter do
 
     context 'when the response body not contains location details' do
       let(:uri) { institution_details_without_locations_details_uri }
-      
+
       its(:locations) do
         is_expected.to eq nil
       end
@@ -98,7 +97,7 @@ describe CricosScrape::InstitutionImporter do
 
       before do
         # Method jump_to_page don't jump to current page (page 1). with total_pages=2, form will submit once
-        locations_list_page_2 = @fake_agent.get(institution_details_with_pagination_location_page_2_uri)
+        locations_list_page_2 = agent.get(institution_details_with_pagination_location_page_2_uri)
         allow_any_instance_of(Mechanize::Form).to receive(:submit).with(nil, {'action' => 'change-location-page'}).and_return(locations_list_page_2)
       end
 

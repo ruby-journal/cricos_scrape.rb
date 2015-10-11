@@ -1,27 +1,22 @@
+require_relative '../entities/institution'
+require_relative '../entities/location'
+require_relative '../entities/contact_officer'
+
 module CricosScrape
   class InstitutionImporter
 
-    INSTITUTION_URL = 'http://cricos.deewr.gov.au/Institution/InstitutionDetailsOnePage.aspx'
+    INSTITUTION_URL = 'http://cricos.education.gov.au/Institution/InstitutionDetailsOnePage.aspx'
 
-    attr_reader :agent
-    private :agent
-
-    def initialize
-      @agent = Mechanize.new
-      @agent.user_agent = Mechanize::AGENT_ALIASES['Windows IE 9']
+    def initialize(agent, **params)
+      @agent = agent
+      @provider_id = params.fetch(:provider_id)
+      @page = agent.get(url)
     end
 
-    def scrape_institution(provider_id)
-      begin
-       @page = agent.get(url_for(provider_id))
-      rescue Mechanize::ResponseCodeError
-        sleep 5
-        scrape_institution(provider_id)
-      end
-
+    def run
       return if institution_not_found?
 
-      institution = CricosScrape::Institution.new
+      institution                  = Institution.new
       institution.provider_id      = provider_id
       institution.provider_code    = find_provider_code
       institution.trading_name     = find_trading_name
@@ -38,7 +33,9 @@ module CricosScrape
 
     private
 
-    def url_for(provider_id)
+    attr_reader :agent, :provider_id, :page
+
+    def url
       "#{INSTITUTION_URL}?ProviderID=#{provider_id}"
     end
 
@@ -95,11 +92,11 @@ module CricosScrape
     # there is no record not found page
     # instead a search page is returned
     def institution_not_found?
-      find_value_of_field(@page.at('#pnlErrorMessage td:last')) == "The Provider ID entered is invalid - please try another."
+      @page.body.include?('The Provider ID entered is invalid - please try another.')
     end
 
     def location_found?
-      find_value_of_field(@page.at('#locationList_lblResultsSummary')) != "No locations were found for the selected institution."
+      !@page.body.include?('No locations were found for the selected institution.')
     end
 
     def find_location
@@ -136,7 +133,7 @@ module CricosScrape
     def jump_to_page(page_number)
       return @page if page_number == current_pagination_page
 
-      hidden_form = @page.form_with :id => "Form1"
+      hidden_form = @page.form_with id: 'Form1'
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "Page$#{page_number}"
       begin
@@ -148,7 +145,7 @@ module CricosScrape
     end
 
     def get_location_id(row_index)
-      hidden_form = @page.form_with :id => "Form1"
+      hidden_form = @page.form_with id: 'Form1'
       hidden_form['__EVENTTARGET'] = 'locationList$gridSearchResults'
       hidden_form['__EVENTARGUMENT'] = "click-#{row_index-3}"
 
@@ -166,22 +163,24 @@ module CricosScrape
       locations_of_page = []
 
       # location_list is table contains locations in current page
-      location_list = @page.at('#locationList_gridSearchResults').children
+      if search_results_node = @page.at('#locationList_gridSearchResults')
+        location_list = search_results_node.children
 
-      excess_row_at_the_end_table = location_results_paginated? ? 3 : 2
-      start_location_row = 3
-      end_location_row = location_list.count - excess_row_at_the_end_table
+        excess_row_at_the_end_table = location_results_paginated? ? 3 : 2
+        start_location_row = 3
+        end_location_row = location_list.count - excess_row_at_the_end_table
 
-      for i in start_location_row..end_location_row
-        location_row = location_list[i].children
+        for i in start_location_row..end_location_row
+          location_row = location_list[i].children
 
-        location_obj = CricosScrape::Location.new
-        location_obj.location_id = get_location_id(i)
-        location_obj.name = find_value_of_field(location_row[1])
-        location_obj.state = find_value_of_field(location_row[2])
-        location_obj.number_of_courses = find_value_of_field(location_row[3])
+          location_obj = Location.new
+          location_obj.location_id = get_location_id(i)
+          location_obj.name = find_value_of_field(location_row[1])
+          location_obj.state = find_value_of_field(location_row[2])
+          location_obj.number_of_courses = find_value_of_field(location_row[3])
 
-        locations_of_page << location_obj
+          locations_of_page << location_obj
+        end
       end
 
       locations_of_page

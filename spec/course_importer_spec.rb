@@ -2,16 +2,14 @@ require 'spec_helper'
 
 describe CricosScrape::CourseImporter do
 
-  describe '#scrape_course' do
-    let(:agent) { CricosScrape::CourseImporter.new }
-    subject(:course) { agent.scrape_course(1) }
+  describe '#run' do
+    let(:agent) { CricosScrape.agent }
+    subject(:course) { CricosScrape::CourseImporter.new(agent, course_id: 1).run }
+
     before do
-      allow(agent).to receive(:url_for).with(1).and_return(uri)
-
-      @fake_agent = Mechanize.new
-
-      course_list_page_1 = @fake_agent.get("#{uri}?LocationID=123")
-      course_list_page_2 = @fake_agent.get("#{uri}?LocationID=456")
+      allow_any_instance_of(CricosScrape::CourseImporter).to receive(:url).and_return(uri)
+      course_list_page_1 = agent.get("#{uri}?LocationID=123")
+      course_list_page_2 = agent.get("#{uri}?LocationID=456")
       allow_any_instance_of(Mechanize::Form).to receive(:submit).with(nil, {'action' => 'get-location-id'}).and_return(course_list_page_1, course_list_page_2)
     end
 
@@ -45,7 +43,7 @@ describe CricosScrape::CourseImporter do
           CricosScrape::ContactOfficer.new('Principal Executive Officer', 'Nicole King', 'Manager', '0262056998', '62059239', nil),
           CricosScrape::ContactOfficer.new('International Student Contact', 'PAUL Wang', 'Study Tour Coordinator', '62077293', '', 'paul.wang@act.gov.au'),
         ]
-        
+
         is_expected.to eq contact_officers
       end
     end
@@ -64,7 +62,7 @@ describe CricosScrape::CourseImporter do
       let(:data) { [CricosScrape::ContactOfficer.new('Principal Executive Officer', 'Andrew Vann', 'Vice-Chancellor', '02 6338 4209', '02 6338 4809', nil),
         CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 63657537', '02 63657590', 'mevans@csu.edu.au'),
         CricosScrape::ContactOfficer.new('International Student Contact', 'Matthew Evans', nil, '02 6365 7537', '02 6365 7590', 'mevans@csu.edu.au')] }
-        
+
       its(:contact_officers) do
         is_expected.to eq data
       end

@@ -1,51 +1,47 @@
+require_relative '../entities/course'
+require_relative '../entities/contact_officer'
+
 module CricosScrape
   class CourseImporter
 
-    COURSE_URL = 'http://cricos.deewr.gov.au/Course/CourseDetails.aspx'
+    COURSE_URL = 'http://cricos.education.gov.au/Course/CourseDetails.aspx'
 
-    attr_reader :agent
-    private :agent
-
-    def initialize
-      @agent = Mechanize.new
-      @agent.user_agent = Mechanize::AGENT_ALIASES['Windows IE 9']
+    def initialize(agent, **params)
+      @agent = agent
+      @course_id = params.fetch(:course_id)
+      @page = agent.get(url)
     end
 
-    def scrape_course(course_id)
-      begin
-        @page = agent.get(url_for(course_id))
-      rescue Mechanize::ResponseCodeError
-        sleep 5
-        scrape_course(course_id)
-      end
-
+    def run
       return if course_not_found?
 
-      course = CricosScrape::Course.new
-      course.course_id  = course_id
-      course.course_name = find_course_name
-      course.course_code = find_course_code
+      course                    = Course.new
+      course.course_id          = course_id
+      course.course_name        = find_course_name
+      course.course_code        = find_course_code
       course.dual_qualification = find_dual_qualification
       course.field_of_education = find_field_of_education
-      course.broad_field = find_education_broad_field
-      course.narrow_field = find_education_narrow_field
-      course.detailed_field = find_education_detailed_field
-      course.course_level = find_course_level
+      course.broad_field        = find_education_broad_field
+      course.narrow_field       = find_education_narrow_field
+      course.detailed_field     = find_education_detailed_field
+      course.course_level       = find_course_level
       course.foundation_studies = find_foundation_studies
-      course.work_component = find_work_component
-      course.course_language = find_course_language
-      course.duration = find_duration
-      course.total_cost = find_total_cost
+      course.work_component     = find_work_component
+      course.course_language    = find_course_language
+      course.duration           = find_duration
+      course.total_cost         = find_total_cost
 
-      course.contact_officers = find_contact_officers
-      course.location_ids = find_course_location
+      course.contact_officers   = find_contact_officers
+      course.location_ids       = find_course_location
 
       course
     end
 
     private
 
-    def url_for(course_id)
+    attr_reader :agent, :course_id, :page
+
+    def url
       "#{COURSE_URL}?CourseID=#{course_id}"
     end
 
@@ -56,7 +52,7 @@ module CricosScrape
     end
 
     def find_value_of_field(field)
-      field.text.strip unless field.nil? 
+      field.text.strip unless field.nil?
     end
 
     def find_course_name
@@ -133,7 +129,7 @@ module CricosScrape
       contact_officers_list.each do |contact_officer|
         @contact_officer_area = contact_officer
         @contact_officer_table = @contact_officer_area.at('table').children
-        
+
         if contains_contact_details_grid?
           contact_officers += find_contact_officer_grid
         else
@@ -226,7 +222,7 @@ module CricosScrape
       else
         location_ids += fetch_location_ids_from_current_page
       end
-      
+
       location_ids
     end
 

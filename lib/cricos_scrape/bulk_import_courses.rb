@@ -1,43 +1,31 @@
+require_relative './importer/course_importer'
+require_relative './agent'
+
 module CricosScrape
   class BulkImportCourses
-    attr_reader :output, :min_id, :max_id, :input
-
-    def initialize(output, min_id, max_id, input=nil)
-      @range = input ? convert_ids_from_file_to_array(input) : (min_id..max_id).to_a
-      return 'Invalid Range ID' if @range.empty?
-
-      @importer = CricosScrape::CourseImporter.new
-      @courses_file = CricosScrape::JsonFileStore.new(output['data'])
-      @last_course_id_file = CricosScrape::JsonFileStore.new(output['id'])
+    def initialize(min_id=0, max_id=10000)
+      @range = (min_id..max_id).to_a
+      @agent = CricosScrape.agent
     end
 
     def perform
-      @range.each do |courseID|
-        scrape_course_and_save_to_file(courseID)
+      @range.each do |course_id|
+        scrape(course_id)
       end
     end
 
     private
-    def scrape_course_and_save_to_file(courseID)
-      course = @importer.scrape_course(courseID)
-      @last_course_id_file.save(courseID, true) rescue nil
+
+    attr_reader :min_id, :max_id, :input, :agent
+
+    def scrape(course_id)
+      course = CourseImporter.new(agent, course_id: course_id).run
 
       if course
-        save_course_data_to_file(courseID, course)
+        puts course.to_json
       else
-        puts "The Course ID #{courseID} entered is invalid - please try another."
+        STDERR.puts "Could not find course with Course ID #{course_id}"
       end
-    end
-
-    def save_course_data_to_file(courseID, course)
-      @courses_file.save(course)
-      puts "Success with CourseID #{courseID}"
-    rescue => e
-      puts "Error writing to files with CourseID #{courseID}"
-    end
-
-    def convert_ids_from_file_to_array(input)
-      File.read(input).split(",").map { |s| s.to_i } rescue []
     end
   end
 end

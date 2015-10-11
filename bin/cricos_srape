@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/cricos_scrape'
+require_relative '../lib/cricos_scrape/version'
+require 'commander/import'
+
+program :version, CricosScrape::VERSION.to_s
+program :description, 'Scrape data from CRICOS website'
+
+command :scrape do |c|
+  c.syntax = 'cricos_scrape scrape [institutions|courses] [min_id:1] [max_id:10000]'
+  c.summary = 'Scrape entities from CRICOS'
+  c.description = c.summary
+  c.example 'Import institutions', 'cricos_scrape scrape institutions'
+  c.example 'Import institutions and persist to a file', 'cricos_scrape scrape institutions >> institutions.json'
+  c.example 'Import institutions with specified ID range [1-200]', 'cricos_scrape scrape institutions 1 200'
+  c.example 'Import courses', 'cricos_scrape scrape courses'
+  c.example 'Import courses and persist to a file', 'cricos_scrape scrape institutions >> courses.json'
+  c.example 'Import courses with specified ID range [1-200]', 'cricos_scrape scrape courses 1 200'
+
+  c.action do |args, options|
+    entity = args[0]
+    min_id = args[1] || 1
+    max_id = args[2] || 10000
+
+    case entity
+    when 'institutions'
+      CricosScrape::BulkImportInstitutions.new(min_id, max_id).perform
+    when 'courses'
+      CricosScrape::BulkImportCourses.new(min_id, max_id).perform
+    when 'contacts'
+      CricosScrape::ImportContacts.new.perform
+    else
+      STDERR.puts "[ERROR] Invalid entity. Must be of [institutions|courses]"
+      exit 1
+    end
+  end
+end
