@@ -1,5 +1,5 @@
-require_relative './importer/course_importer'
-require_relative './agent'
+require 'cricos_scrape/importer/course_importer'
+require 'cricos_scrape/agent'
 
 module CricosScrape
   class BulkImportCourses

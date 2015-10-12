@@ -1,5 +1,5 @@
-require_relative '../entities/contact'
-require_relative '../entities/address'
+require 'cricos_scrape/entities/contact'
+require 'cricos_scrape/entities/address'
 
 module CricosScrape
   class ContactImporter

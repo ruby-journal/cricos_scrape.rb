@@ -1,4 +1,7 @@
-require './lib/cricos_scrape/version'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'cricos_scrape/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'cricos_scrape'
@@ -10,15 +13,10 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/ruby-journal/cricos_scrape.rb'
   spec.license       = 'MIT'
 
-  spec.files         = Dir['[A-Z]*',
-                        'lib/*.rb',
-                        'lib/cricos_scrape/*.rb',
-                        'spec/*.rb',
-                        'spec/fixtures/*.html']
-
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.files         = `git ls-files -z -- lib/* bin/* LICENSE.md README.md cricos_scrape.gemspec`.split("\x0")
+  spec.executables   = ['cricos_scrape']
   spec.test_files    = spec.files.grep(%r{^(spec)/})
-  spec.required_ruby_version = '>= 2.2.2'
+  spec.required_ruby_version = '>= 2.0.0'
 
   spec.require_paths = ['lib']
 
