@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ruby-journal/cricos_scrape.rb.svg)](https://travis-ci.org/ruby-journal/cricos_scrape.rb)
+[![Code Climate](https://codeclimate.com/github/ruby-journal/cricos_scrape.rb/badges/gpa.svg)](https://codeclimate.com/github/ruby-journal/cricos_scrape.rb)
 
 
 # CRICOS Scraper
