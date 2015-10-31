@@ -26,4 +26,6 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'mechanize', '~> 2.7', '>= 2.7.2'
   spec.add_runtime_dependency 'slop', '~> 4.2.0', '>= 4.2.0'
+
+  spec.add_dependency 'commander', '~> 4.3'
 end
