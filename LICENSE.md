@@ -1,4 +1,4 @@
-Copyright © 2014-2015 Trung Lê
+Copyright © 2014-2020 Trung Lê
 
 MIT License
 
