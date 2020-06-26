@@ -6,10 +6,8 @@
 
 ![CRICOS Logo](http://cricos.education.gov.au/images/cricos.gif)
 
-CRICOS lacks API for data retrieval (so are many government-based services). This gem
+CRICOS lacks API for data retrieval (so do many government-based services). This gem
 helps scrape data from [http://cricos.education.gov.au](http://cricos.education.gov.au).
-
-This gem supports MRI Ruby 2.0.0+.
 
 # Features
 
@@ -32,6 +30,7 @@ Please consult `cricos_scrape -h` command line.
 # Testing
 
 The tests are in the spec directory. Here syntax to test this gem.
+
 ```
 rspec
 ```
