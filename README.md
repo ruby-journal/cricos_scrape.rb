@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/ruby-journal/cricos_scrape.rb.svg)](https://travis-ci.org/ruby-journal/cricos_scrape.rb)
 [![Code Climate](https://codeclimate.com/github/ruby-journal/cricos_scrape.rb/badges/gpa.svg)](https://codeclimate.com/github/ruby-journal/cricos_scrape.rb)
-
+[![From Vietnam with <3](https://raw.githubusercontent.com/webuild-community/badge/master/svg/love.svg)](https://webuild.community)
+[![Made in Vietnam](https://raw.githubusercontent.com/webuild-community/badge/master/svg/made.svg)](https://webuild.community)
+[![Built with WeBuild](https://raw.githubusercontent.com/webuild-community/badge/master/svg/WeBuild.svg)](https://webuild.community)
 
 # CRICOS Scraper
 
