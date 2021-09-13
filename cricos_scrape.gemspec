@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z -- lib/* bin/* LICENSE.md README.md cricos_scrape.gemspec`.split("\x0")
   spec.executables   = ['cricos_scrape']
   spec.test_files    = spec.files.grep(%r{^(spec)/})
-  spec.required_ruby_version = '>= 2.5.0'
+  spec.required_ruby_version = '>= 3.0.0'
 
   spec.require_paths = ['lib']
 
