@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'rspec', '~> 3.3.0', '>= 3.3.0'
-  spec.add_development_dependency 'rspec-its', '~> 1.2.0', '>= 1.2.0'
+  spec.add_development_dependency 'rspec', '~> 3.8.0', '>= 3.8.0'
+  spec.add_development_dependency 'rspec-its', '~> 1.3.0', '>= 1.3.0'
 
   spec.add_runtime_dependency 'mechanize', '~> 2.7', '>= 2.7.2'
   spec.add_runtime_dependency 'slop', '~> 4.2.0', '>= 4.2.0'
