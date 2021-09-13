@@ -11,6 +11,13 @@
 CRICOS lacks API for data retrieval (so do many government-based services). This gem
 helps scrape data from [http://cricos.education.gov.au](http://cricos.education.gov.au).
 
+NOTE: The [data.gov.au](https://data.gov.au) has provided basic information about
+[CRICOS institutions and courses](https://data.gov.au/data/dataset/cricos)
+via static Excel file and DataAPI. As of 2021, the data from this source is still
+lacking information (for example contact details). But I do believe DataAPI will
+eventually replace this scraper in the near future. For the time-being, please use
+both sources.
+
 # Features
 
 Support scrapping following entities:
